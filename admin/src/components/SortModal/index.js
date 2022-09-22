@@ -14,7 +14,7 @@ const SortModal = () => {
   const fetchFoo = async () => {
     try {
       const { data } = await axiosInstance.get(
-        `/content-manager/collection-types/api::foo.foo`
+        `/content-manager/collection-types/api::foo.foo?sort=rank:asc`
       );
 
       setStatus('success');
