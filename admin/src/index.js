@@ -36,14 +36,14 @@ export default {
         id: pluginId,
         intlLabel: {
           id: `${pluginId}.plugin.name`,
-          defaultMessage: 'Todo',
+          defaultMessage: 'Drag Drop Content Types',
         },
       },
       [
         {
           intlLabel: {
             id: `${pluginId}.plugin.name`,
-            defaultMessage: 'General settings',
+            defaultMessage: 'Configuration',
           },
           id: 'settings',
           to: `/settings/${pluginId}`,

@@ -45,7 +45,7 @@ const Settings = () => {
     <>
       <HeaderLayout
         id="title"
-        title="Drag Drop Content Type Settings"
+        title="Drag Drop Content Type Config"
         subtitle="Manage field values for drag-droppable entries"
         primaryAction={
           isLoading ? (
