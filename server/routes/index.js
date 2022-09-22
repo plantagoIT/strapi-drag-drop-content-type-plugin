@@ -1,8 +1,8 @@
 // Structure all routes in seperate files
 const task = require('./task');
-//const report = require('./report');
+const sort = require('./sort');
 
 module.exports = {
   task,
-  //report,
+  sort,
 };

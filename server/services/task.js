@@ -1,7 +1,5 @@
 'use strict';
 
-'use strict';
-
 const { createCoreService } = require('@strapi/strapi').factories;
 
 function getPluginStore() {

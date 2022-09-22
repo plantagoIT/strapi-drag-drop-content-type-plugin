@@ -10,6 +10,9 @@ import Plus from '@strapi/icons/Plus';
 
 import TaskModal from '../TaskModal';
 
+import DragSortableList from 'react-drag-sortable'
+
+
 function useRelatedTasks() {
   const { initialData, isSingleType, slug } = useCMEditViewDataManager();
 
@@ -29,8 +32,7 @@ function useRelatedTasks() {
   const refetchTasks = async () => {
     try {
       const { data } = await axiosInstance.get(
-        `/content-manager/${isSingleType ? 'single-types' : 'collection-types'}/${slug}/${
-          isSingleType ? '' : initialData.id
+        `/content-manager/${isSingleType ? 'single-types' : 'collection-types'}/${slug}/${isSingleType ? '' : initialData.id
         }?populate=tasks`
       );
 
@@ -90,6 +92,7 @@ const TodoCard = () => {
           <span
             style={{
               textDecoration: task.isDone && settings == false ? 'line-through' : 'none',
+              backgroundColor: 'red',
             }}
           >
             {task.name}
@@ -98,6 +101,40 @@ const TodoCard = () => {
       </>
     ));
   };
+
+  var placeholder = (
+    <div className="placeholderContent"> DROP HERE ! </div>
+  );
+
+  var list = [
+    { content: (<span style={{color: 'white'}}>test1</span>), classes: ['test', 'bigger'] },
+    { content: (<span style={{color: 'white'}}>test2</span>), classes: ['test'] },
+    { content: (<span style={{color: 'white'}}>test3</span>), classes: ['test'] },
+    { content: (<span style={{color: 'white'}}>test4</span>), classes: ['test', 'bigger'] }
+  ];
+
+  var listHorizontal = [
+    { content: (<div>test1</div>), classes: ['bigger'] },
+    { content: (<div>test2</div>) },
+    { content: (<div>test3</div>), classes: ['bigger'] },
+    { content: (<div>test4</div>) }
+  ];
+
+  var listGrid = [
+    { content: (<div>test1</div>) },
+    { content: (<div>test2</div>) },
+    { content: (<div>test3</div>) },
+    { content: (<div>test4</div>) },
+    { content: (<div>test5</div>) },
+    { content: (<div>test6</div>) },
+    { content: (<div>test7</div>) },
+    { content: (<div>test8</div>) },
+    { content: (<div>test9</div>) }
+  ];
+
+  var onSort = function (sortedList) {
+    console.log("sortedList", sortedList);
+  }
 
   return (
     <>
@@ -132,10 +169,19 @@ const TodoCard = () => {
           >
             <Flex>
               <Icon as={Plus} color="primary600" marginRight={2} width={3} height={3} />
-              Add todo
+              Add todos
             </Flex>
           </Typography>
 
+          <div>
+
+            <DragSortableList items={list} moveTransitionDuration={0.3} onSort={onSort} type="vertical" />
+            <DragSortableList items={listHorizontal} moveTransitionDuration={0.3} dropBackTransitionDuration={0.3} placeholder={placeholder} onSort={onSort} type="horizontal" />
+            <DragSortableList items={listGrid} dropBackTransitionDuration={0.3} onSort={onSort} type="grid" />
+          </div>
+          <br></br>
+          <br></br>
+          <br></br>
           <Stack paddingTop={3} size={2}>
             {showTasks()}
           </Stack>
