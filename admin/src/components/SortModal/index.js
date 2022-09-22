@@ -75,7 +75,6 @@ const SortModal = () => {
     return (
       <>
         <SimpleMenu
-          label="Menu"
           as={IconButton}
           icon={<Layer />}
           onClick={() => { fetchFoo() }}
