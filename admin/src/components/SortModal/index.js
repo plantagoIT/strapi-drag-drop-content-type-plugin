@@ -5,7 +5,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import DragSortableList from 'react-drag-sortable'
 
 import { SimpleMenu, MenuItem } from '@strapi/design-system/SimpleMenu';
-
+import { IconButton } from '@strapi/design-system/IconButton';
 import { Icon } from '@strapi/design-system/Icon';
 import Drag from '@strapi/icons/Drag';
 import Layer from '@strapi/icons/Layer';
@@ -41,7 +41,7 @@ const SortModal = () => {
       let list = [];
       for (let i = 0; i < data.results.length; i++) {
         list.push({
-          content: (<MenuItem ><Icon height={"0.6rem"} as={Drag}/>&nbsp;{data.results[i].Bar}</MenuItem>), strapiId: data.results[i].id
+          content: (<MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;{data.results[i].Bar}</MenuItem>), strapiId: data.results[i].id
         });
       }
       setFoo(list);
@@ -75,7 +75,9 @@ const SortModal = () => {
     return (
       <>
         <SimpleMenu
-          label={Label}
+          label="Menu"
+          as={IconButton}
+          icon={<Layer />}
           onClick={() => { fetchFoo() }}
         >
           <DragSortableList items={foo} moveTransitionDuration={0.3} onSort={updateFoo} type="vertical" />
@@ -102,8 +104,6 @@ const SortModal = () => {
   // Get content type from url
   const paths = window.location.pathname.split('/')
   const contentType = paths[paths.length - 1]
-  // Order menu label
-  const Label = <Layer />;
 
   initializeFoo();
 
