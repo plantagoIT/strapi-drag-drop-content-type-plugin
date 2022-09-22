@@ -11,19 +11,21 @@ import { Grid, GridItem } from '@strapi/design-system/Grid';
 import { HeaderLayout } from '@strapi/design-system/Layout';
 import { ContentLayout } from '@strapi/design-system/Layout';
 import { Typography } from '@strapi/design-system/Typography';
-import { ToggleInput } from '@strapi/design-system/ToggleInput';
+import { TextInput } from '@strapi/design-system/TextInput';
+import { Tooltip } from '@strapi/design-system/Tooltip';
 
+import Information from '@strapi/icons/Information';
 import Check from '@strapi/icons/Check';
 
 const Settings = () => {
-  const [settings, setSettings] = useState();
+  const [settings, setSettings] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const toggleNotification = useNotification();
 
   useEffect(() => {
     taskRequests.getSettings().then(res => {
-      setSettings(res.data.settings);
+      setSettings(res.data.body);
       setIsLoading(false);
     });
   }, [setSettings]);
@@ -31,7 +33,7 @@ const Settings = () => {
   const handleSubmit = async () => {
     setIsSaving(true);
     const res = await taskRequests.setSettings(settings);
-    setSettings(res.data.settings);
+    setSettings(res.data.body);
     setIsSaving(false);
     toggleNotification({
       type: 'success',
@@ -43,8 +45,8 @@ const Settings = () => {
     <>
       <HeaderLayout
         id="title"
-        title="Todo General settings"
-        subtitle="Manage the settings and behaviour of your todo plugin"
+        title="Drag Drop Content Type Settings"
+        subtitle="Manage field values for drag-droppable entries"
         primaryAction={
           isLoading ? (
             <></>
@@ -75,20 +77,61 @@ const Settings = () => {
             paddingRight={7}
           >
             <Stack size={3}>
-              <Typography>General settings</Typography>
+              <Typography>Field Names</Typography>
               <Grid gap={6}>
-                <GridItem col={12} s={12}>
-                  <ToggleInput
-                    checked={settings?.disabled ?? false}
-                    hint="Cross or disable checkbox tasks marked as done"
-                    offLabel="Cross"
-                    onLabel="Disable"
-                    onChange={e => {
-                      setSettings({
-                        disabled: e.target.checked,
-                      });
-                    }}
-                  />
+                <GridItem col={6} s={12}>
+                  <Box padding={0}>
+                    <TextInput
+                      placeholder="Rank"
+                      label="Rank Field Name"
+                      hint="You must create a Number Field with this label and type integer in the Content-Type Builder"
+                      name="content"
+                      onChange={e => {
+                        setSettings({
+                          ...settings,
+                          rank: e.target.value,
+                        })
+                      }}
+                      value={settings.rank}
+                      labelAction={
+                        <Tooltip description="Field which is used for ordering content-type entries">
+                          <button aria-label="Information about the email" style={{
+                            border: 'none',
+                            padding: 0,
+                            background: 'transparent'
+                          }}>
+                            <Information aria-hidden={true} />
+                          </button>
+                        </Tooltip>
+                      } />
+                  </Box>;
+                </GridItem>
+                <GridItem col={6} s={12}>
+                  <Box padding={0}>
+                    <TextInput
+                      placeholder="Title"
+                      label="Title Field Name"
+                      hint="You must create a Short Text Field with this label in the Content-Type Builder"
+                      name="content"
+                      onChange={e => {
+                        setSettings({
+                          ...settings,
+                          title: e.target.value,
+                        })
+                      }}
+                      value={settings.title}
+                      labelAction={
+                        <Tooltip description="Field that will show up in the drag drop menu">
+                          <button aria-label="Information about the email" style={{
+                            border: 'none',
+                            padding: 0,
+                            background: 'transparent'
+                          }}>
+                            <Information aria-hidden={true} />
+                          </button>
+                        </Tooltip>
+                      } />
+                  </Box>;
                 </GridItem>
               </Grid>
             </Stack>

@@ -12,7 +12,8 @@ function getPluginStore() {
 async function createDefaultConfig() {
   const pluginStore = getPluginStore();
   const value = {
-    disabled: false,
+    rank: 'rank',
+    title: 'title',
   };
   await pluginStore.set({ key: 'settings', value });
   return pluginStore.get({ key: 'settings' });
