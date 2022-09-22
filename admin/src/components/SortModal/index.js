@@ -51,7 +51,7 @@ const SortModal = () => {
   var onSort = function (sortedList) {
     console.log("sortedList", sortedList);
   }
-  const Label = <>Sort</>;
+  const Label = <>Order</>;
 
   return (
     <>
