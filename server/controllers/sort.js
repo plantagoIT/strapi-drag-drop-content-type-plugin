@@ -29,7 +29,7 @@ module.exports = {
       ctx.body = await strapi
         .plugin("drag-drop-content-types")
         .service("sort")
-        .update(ctx.params.id, ctx.request.body.rank);
+        .update(ctx.params.id, ctx.request.body.contentType, ctx.request.body.rank);
     } catch (err) {
       ctx.throw(500, err);
     }
