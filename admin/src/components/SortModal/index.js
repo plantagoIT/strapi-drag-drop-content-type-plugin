@@ -22,10 +22,25 @@ const SortModal = () => {
       let list = [];
       for (let i = 0; i < data.results.length ; i++){
         list.push({
-          content: (<MenuItem>{data.results[i].Bar}</MenuItem>), classes: ['test', 'bigger']  
+          content: (<MenuItem>{data.results[i].Bar}</MenuItem>), strapiId: data.results[i].id
         });
       }
       setFoo(list);
+    } catch (e) {
+      console.log(e);
+      setStatus('error');
+    }
+  };
+
+  const updateFoo = async (sortedList) => {
+    try {
+      // Iterate over all results and append them to the list
+      for (let i = 0; i < sortedList.length ; i++){
+        await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].strapiId}`, {
+          rank: sortedList[i].rank,
+        });
+      }
+      setStatus('success');
     } catch (e) {
       console.log(e);
       setStatus('error');
@@ -50,6 +65,7 @@ const SortModal = () => {
 
   var onSort = function (sortedList) {
     console.log("sortedList", sortedList);
+    updateFoo(sortedList);
   }
   const Label = <>Order</>;
 

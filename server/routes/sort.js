@@ -23,7 +23,7 @@ module.exports = {
     },
     {
       method: "PUT",
-      path: "/update/:id",
+      path: "/sort-update/:id",
       handler: "sort.update",
       config: {
         policies: [],
@@ -32,7 +32,7 @@ module.exports = {
     },
     {
       method: "POST",
-      path: "/create",
+      path: "/sort-create",
       handler: "sort.create",
       config: {
         policies: [],

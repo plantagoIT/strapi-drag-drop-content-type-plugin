@@ -43,6 +43,7 @@ module.exports = {
     }
   },
   async update(ctx) {
+    console.log("*************************************************************")
     try {
       ctx.body = await strapi
         .plugin("drag-drop-content-types")

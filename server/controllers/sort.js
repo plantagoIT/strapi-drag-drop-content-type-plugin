@@ -24,11 +24,12 @@ module.exports = {
     }
   },
   async update(ctx) {
+    console.log(ctx.request.body)
     try {
       ctx.body = await strapi
         .plugin("drag-drop-content-types")
         .service("sort")
-        .update(ctx.params.id, ctx.request.body.data);
+        .update(ctx.params.id, ctx.request.body.rank);
     } catch (err) {
       ctx.throw(500, err);
     }

@@ -40,6 +40,8 @@ module.exports = createCoreService('plugin::drag-drop-content-types.task', {
     return await strapi.query("plugin::drag-drop-content-types.task").create(data);
   },
   async update(id, data) {
+    console.log("*************************************************************")
+
     return await strapi.query("plugin::drag-drop-content-types.task").update({
       where: { id },
       data,

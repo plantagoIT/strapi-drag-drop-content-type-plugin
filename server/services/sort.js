@@ -12,10 +12,13 @@ module.exports = createCoreService('plugin::drag-drop-content-types.task', {
   async create(data) {
     return await strapi.query("plugin::drag-drop-content-types.task").create(data);
   },
-  async update(id, data) {
-    return await strapi.query("plugin::drag-drop-content-types.task").update({
-      where: { id },
-      data,
+  async update(id, rank) {
+    console.log("updating stuff")
+    return await strapi.query("api::foo.foo").update({
+      where: { id: id },
+      data:{
+        rank: rank,
+      }
     });
   },
 });
