@@ -60,6 +60,7 @@ const SortModal = () => {
       for (let i = 0; i < sortedList.length; i++) {
         // Only update changed values
         if (previousSortedList[i] && previousSortedList[i].strapiId != sortedList[i].strapiId){
+          // Update rank via put request
           await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].strapiId}`, {
             contentType: contentType,
             rank: sortedList[i].rank,
