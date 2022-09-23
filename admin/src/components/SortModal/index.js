@@ -16,6 +16,14 @@ const SortModal = () => {
   const [foo, setFoo] = useState([]);
   const [status, setStatus] = useState('loading');
 
+  // Shorten string to prevent line break
+  const shortenString = (string) => {
+    if (string.length > 40){
+      return string.substring(0, 37) + "..."
+    }
+    return string
+  }
+
   // Check database if the desired fields are available
   // TODO: check field integrity 
   const initializeFoo = async () => {
@@ -43,7 +51,7 @@ const SortModal = () => {
       let list = [];
       for (let i = 0; i < data.results.length; i++) {
         list.push({
-          content: (<MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;{data.results[i].Bar}</MenuItem>), strapiId: data.results[i].id
+          content: (<MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={data.results[i].Bar}>{shortenString(data.results[i].Bar)}</span></MenuItem>), strapiId: data.results[i].id
         });
       }
       setFoo(list);
