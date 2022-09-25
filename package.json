@@ -12,6 +12,9 @@
     "type": "git",
     "url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
   },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.0.0"
+  },
   "dependencies": {
     "react-drag-sortable": "^1.0.6"
   },
