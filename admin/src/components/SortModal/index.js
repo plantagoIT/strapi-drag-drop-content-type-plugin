@@ -43,7 +43,7 @@ const SortModal = () => {
         const { data } = await axiosInstance.get(
           `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
           );
-          if (!!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
+          if (data.results.length > 0 && !!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
           setActive(true);
         }
       }
