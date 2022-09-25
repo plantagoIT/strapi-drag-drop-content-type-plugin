@@ -21,7 +21,7 @@ async function createDefaultConfig() {
   return pluginStore.get({ key: 'settings' });
 }
 
-module.exports = createCoreService('plugin::drag-drop-content-types.task', {
+module.exports = createCoreService('plugin::drag-drop-content-types.sort', {
   async getSettings() {
     const pluginStore = getPluginStore();
     let config = await pluginStore.get({ key: 'settings' });
@@ -39,14 +39,7 @@ module.exports = createCoreService('plugin::drag-drop-content-types.task', {
   async index() {
     return await strapi.query('api::foo.foo').count();
   },
-  async count() {
-    return await strapi.query('plugin::drag-drop-content-types.task').count();
-  },
-  async create(data) {
-    return await strapi.query("plugin::drag-drop-content-types.task").create(data);
-  },
   async update(id, contentType, rank) {
-    console.log("updating stuff")
     return await strapi.query(contentType).update({
       where: { id: id },
       data:{

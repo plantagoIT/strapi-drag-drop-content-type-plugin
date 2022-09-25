@@ -1,6 +1,6 @@
-import axiosInstance from '../../src/utils/axiosInstance';
+import axiosInstance from '../utils/axiosInstance';
 
-const taskRequests = {
+const sortRequests = {
   getTaskCount: async () => {
     const data = await axiosInstance.get(`/drag-drop-content-types/count`);
     return data;
@@ -15,4 +15,4 @@ const taskRequests = {
     });
   },
 };
-export default taskRequests;
+export default sortRequests;

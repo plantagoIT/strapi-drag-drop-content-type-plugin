@@ -1,7 +1,5 @@
 'use strict';
 
 module.exports = ({ strapi }) => {
-  console.log("####################################")
-  console.log("REGISTERED DD PLUGIN")
-  
+  console.log("REGISTERED DRAG AND DROP CONTENT TYPE PLUGIN")
 };

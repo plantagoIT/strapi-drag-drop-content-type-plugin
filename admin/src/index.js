@@ -2,8 +2,6 @@ import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
 import Initializer from './components/Initializer';
-import PluginIcon from './components/PluginIcon';
-import TodoCard from './components/TodoCard';
 import SortModal from './components/SortModal';
 
 
@@ -11,26 +9,6 @@ const name = pluginPkg.strapi.name;
 
 export default {
   register(app) {
-    app.addMenuLink({
-      to: `/plugins/${pluginId}`,
-      icon: PluginIcon,
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: name,
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
-
-        return component;
-      },
-      permissions: [
-        // Uncomment to set the permissions of the plugin here
-        // {
-        //   action: '', // the action name should be plugin::plugin-name.actionType
-        //   subject: null,
-        // },
-      ],
-    });
     app.createSettingSection(
       {
         id: pluginId,
@@ -62,19 +40,13 @@ export default {
   },
 
   bootstrap(app) {
-    app.injectContentManagerComponent("editView", "right-links", {
-      name: "todo-component",
-      Component: TodoCard,
-    });
     app.injectContentManagerComponent("listView", "actions", {
       name: "sort-component",
       Component: SortModal,
     });
 
-
-
-	  app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
-			return {
+    app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
+      return {
         layout,
         displayedHeaders: [
           ...displayedHeaders,
@@ -83,13 +55,13 @@ export default {
             fieldSchema: { type: 'string' }, // Schema of the attribute
             metadatas: {
               label: 'Raboo', // Label of the header,
-              sortable: true|false // Define if the column is sortable
+              sortable: true | false // Define if the column is sortable
             }, // Metadatas for the label
             // Name of the key in the data we will display
             name: 'locales',
             // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
           },
-			  ]
+        ]
       }
     });
   },

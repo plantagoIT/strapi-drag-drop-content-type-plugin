@@ -1,23 +1,22 @@
 {
   "name": "drag-drop-content-types",
   "version": "0.0.0",
-  "description": "This is the description of the plugin.",
+  "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
   "strapi": {
     "name": "drag-drop-content-types",
-    "description": "Description of Drag Drop Content Types plugin",
+    "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
     "kind": "plugin",
     "displayName": "Drag Drop Content Types"
   },
   "dependencies": {
-    "react-drag-and-drop": "^3.0.0",
     "react-drag-sortable": "^1.0.6"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Aeneas Meier"
   },
   "maintainers": [
     {
-      "name": "A Strapi developer"
+      "name": "Aeneas Meier"
     }
   ],
   "engines": {

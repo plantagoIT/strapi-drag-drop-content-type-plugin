@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import taskRequests from '../../api/task';
+import sortRequests from '../../api/sort';
 
 import { LoadingIndicatorPage, useNotification } from '@strapi/helper-plugin';
 
@@ -24,7 +24,7 @@ const Settings = () => {
   const toggleNotification = useNotification();
 
   useEffect(() => {
-    taskRequests.getSettings().then(res => {
+    sortRequests.getSettings().then(res => {
       setSettings(res.data.body);
       setIsLoading(false);
     });
@@ -32,7 +32,7 @@ const Settings = () => {
 
   const handleSubmit = async () => {
     setIsSaving(true);
-    const res = await taskRequests.setSettings(settings);
+    const res = await sortRequests.setSettings(settings);
     setSettings(res.data.body);
     setIsSaving(false);
     toggleNotification({
