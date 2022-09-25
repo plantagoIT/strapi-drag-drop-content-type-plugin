@@ -15,6 +15,7 @@ const SortModal = () => {
   const [active, setActive] = useState(false);
   const [foo, setFoo] = useState([]);
   const [status, setStatus] = useState('loading');
+  const [settings, setSettings] = useState('loading');
 
   // Shorten string to prevent line break
   const shortenString = (string) => {
@@ -23,6 +24,17 @@ const SortModal = () => {
     }
     return string
   }
+
+  // Fetch settings from configuration
+  const fetchSettings = async () => {
+    try {
+      const { data } = await axiosInstance.get(`drag-drop-content-types/settings`);
+      setSettings(data.body);
+      console.log(settings);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // Check database if the desired fields are available
   // TODO: check field integrity 
@@ -126,7 +138,10 @@ const SortModal = () => {
   // Store the drag and drop lists previous value to increase update performance
   let previousSortedList = []
 
-  initializeFoo();
+  useEffect(() => {
+    fetchSettings();
+    initializeFoo();
+  }, [])
 
   return (
     <>
