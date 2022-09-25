@@ -39,11 +39,13 @@ const SortModal = () => {
   // TODO: check field integrity 
   const initializeContentType = async () => {
     try {
-      const { data } = await axiosInstance.get(
-        `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
-      );
-      if (!!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
-        setActive(true);
+      if (settings){
+        const { data } = await axiosInstance.get(
+          `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
+          );
+          if (!!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
+          setActive(true);
+        }
       }
     } catch (e) {
       console.log(e);
@@ -75,15 +77,20 @@ const SortModal = () => {
   // Update all ranks via put request.
   const updateContentType = async (sortedList) => {
     try {
+      // Increase performance by breaking loop after last element having a rank change is updated
+      let rankHasChanged = false
       // Iterate over all results and append them to the list
       for (let i = 0; i < sortedList.length; i++) {
         // Only update changed values
-        if (previousSortedList[i] && previousSortedList[i].strapiId != sortedList[i].strapiId) {
+        if (previousSortedList.length == 0 || previousSortedList[i].strapiId != sortedList[i].strapiId) {
           // Update rank via put request
           await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].strapiId}`, {
             contentType: contentTypePath,
             rank: sortedList[i].rank,
           });
+          rankHasChanged = true;
+        } else if (rankHasChanged) {
+          break;
         }
       }
       // Store the state of the list to increase update performance
