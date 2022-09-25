@@ -7,31 +7,6 @@ module.exports = {
       .service('task')
       .count();
   },
-  async getSettings(ctx) {
-    try {
-      ctx.body = await strapi
-        .plugin('drag-drop-content-types')
-        .service('task')
-        .getSettings();
-    } catch (err) {
-      ctx.throw(500, err);
-    }
-  },
-  async setSettings(ctx) {
-    const { body } = ctx.request;
-    try {
-      await strapi
-        .plugin('drag-drop-content-types')
-        .service('task')
-        .setSettings(body);
-      ctx.body = await strapi
-        .plugin('drag-drop-content-types')
-        .service('task')
-        .getSettings();
-    } catch (err) {
-      ctx.throw(500, err);
-    }
-  },
   async create(ctx) {
     try {
       ctx.body = await strapi

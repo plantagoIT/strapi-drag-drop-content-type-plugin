@@ -5,6 +5,24 @@ module.exports = {
   routes: [
     {
       method: 'GET',
+      path: '/settings',
+      handler: 'sort.getSettings',
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+    {
+      method: 'POST',
+      path: '/settings',
+      handler: 'sort.setSettings',
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+    {
+      method: 'GET',
       path: '/sort-index',
       handler: 'sort.index',
       config: {

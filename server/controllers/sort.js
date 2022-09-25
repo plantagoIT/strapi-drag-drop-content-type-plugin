@@ -1,6 +1,31 @@
 'use strict';
 
 module.exports = {
+  async getSettings(ctx) {
+    try {
+      ctx.body = await strapi
+        .plugin('drag-drop-content-types')
+        .service('sort')
+        .getSettings();
+    } catch (err) {
+      ctx.throw(500, err);
+    }
+  },
+  async setSettings(ctx) {
+    const { body } = ctx.request;
+    try {
+      await strapi
+        .plugin('drag-drop-content-types')
+        .service('sort')
+        .setSettings(body);
+      ctx.body = await strapi
+        .plugin('drag-drop-content-types')
+        .service('sort')
+        .getSettings();
+    } catch (err) {
+      ctx.throw(500, err);
+    }
+  },
   async index(ctx) {
     ctx.body = await strapi
       .plugin('drag-drop-content-types')
