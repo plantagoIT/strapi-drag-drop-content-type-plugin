@@ -8,15 +8,23 @@
     "kind": "plugin",
     "displayName": "Drag Drop Content Types"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
+  },
   "dependencies": {
     "react-drag-sortable": "^1.0.6"
   },
   "author": {
-    "name": "Aeneas Meier"
+    "name": "Aeneas Meier",
+    "email": "aeneas@retikolo.xyz",
+    "url": "https://rgb.retikolo.xyz"
   },
   "maintainers": [
     {
-      "name": "Aeneas Meier"
+      "name": "Aeneas Meier",
+      "email": "aeneas@retikolo.xyz",
+      "url": "https://rgb.retikolo.xyz"
     }
   ],
   "engines": {
