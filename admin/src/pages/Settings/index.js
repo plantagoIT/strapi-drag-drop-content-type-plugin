@@ -104,7 +104,7 @@ const Settings = () => {
                           </button>
                         </Tooltip>
                       } />
-                  </Box>;
+                  </Box>
                 </GridItem>
                 <GridItem col={6} s={12}>
                   <Box padding={0}>
@@ -131,7 +131,7 @@ const Settings = () => {
                           </button>
                         </Tooltip>
                       } />
-                  </Box>;
+                  </Box>
                 </GridItem>
               </Grid>
             </Stack>
