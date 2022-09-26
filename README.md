@@ -37,5 +37,12 @@ Go to `Settings` -> `Drag Drop Content Type` -> `Configuration`:
 * Add the specified fields to your content type. With the default values this would be `title` (Text (Type: Short Text)) and `rank` (Number (Number format: integer)) 
 * You will be rewared with the drag-dropable menu in the list view of all content types having the specified fields.
 
+### In your frontend
+Assuming you go with the default settings, you can make a request on the following url to get the ordered items:
+
+```
+http://localhost:1337/api/foo?sort=rank:asc
+```
+
 ## 🤝 Contribute
 Feel free to fork and make pull requests to this plugin. All the input is welcome!
