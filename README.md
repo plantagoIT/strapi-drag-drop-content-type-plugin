@@ -25,8 +25,7 @@ yarn add @retikolo/drag-drop-content-types
 module.exports = {
   // ...
   'drag-drop-content-types': {
-    enabled: true,
-    resolve: './src/plugins/drag-drop-content-types'
+    enabled: true
   }
 }
 ```
