@@ -1,4 +1,8 @@
-# Strapi plugin drag-drop-content-types
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/37687705/192227260-db082018-947a-4166-a3f4-983e1024dd59.png" width="20%">
+  <h1>Strapi plugin drag-drop-content-types</h1>
+</div>
+
 ![drag-drop-preview](https://user-images.githubusercontent.com/37687705/191790500-f7bc7968-cf10-4448-a049-3350d96d2d8b.png)
 
 ## ⚠ THIS PLUGIN IS IN BETA
