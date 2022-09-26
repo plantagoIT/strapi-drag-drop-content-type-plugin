@@ -36,6 +36,7 @@ Go to `Settings` -> `Drag Drop Content Type` -> `Configuration`:
 * Specify how the rank field and the corresponding title field are called in your content types. Default value are `rank` and `title`.
 * Add the specified fields to your content type. With the default values this would be `title` (Text (Type: Short Text)) and `rank` (Number (Number format: integer)) 
 * You will be rewared with the drag-dropable menu in the list view of all content types having the specified fields.
+* (Recommendation: remove the `rank` attribute from the view using `Configure the view button`.)
 
 ### In your frontend
 Assuming you go with the default settings, you can make a request on the following url to get the ordered items:
