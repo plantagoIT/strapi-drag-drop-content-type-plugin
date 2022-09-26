@@ -30,6 +30,18 @@
       "url": "https://rgb.retikolo.xyz"
     }
   ],
+  "keywords": [
+    "strapi",
+    "plugin",
+    "strapi-plugin",
+    "drag",
+    "drop",
+    "drag and drop",
+    "drag drop content types",
+    "content types",
+    "sort",
+    "order"
+  ],
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
