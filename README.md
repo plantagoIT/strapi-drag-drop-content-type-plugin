@@ -46,4 +46,4 @@ http://localhost:1337/api/foo?sort=rank:asc
 ```
 
 ## 🤝 Contribute
-Feel free to fork and make pull requests to this plugin. All the input is welcome!
+Feel free to fork and make pull requests to this plugin. All input is welcome!
