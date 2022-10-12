@@ -28,7 +28,7 @@ const SortModal = () => {
   // Fetch settings from configuration
   const fetchSettings = async () => {
     try {
-      const { data } = await axiosInstance.get(`drag-drop-content-types/settings`);
+      const { data } = await axiosInstance.get(`/drag-drop-content-types/settings`);
       setSettings(data.body);
     } catch (e) {
       console.log(e);
