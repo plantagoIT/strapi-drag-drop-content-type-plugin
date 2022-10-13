@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axiosInstance from '../../utils/axiosInstance';
 
-import DragSortableList from 'react-drag-sortable'
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { SimpleMenu, MenuItem } from '@strapi/design-system/SimpleMenu';
 import { IconButton } from '@strapi/design-system/IconButton';
@@ -13,7 +13,7 @@ import Layer from '@strapi/icons/Layer';
 const SortModal = () => {
 
   const [active, setActive] = useState(false);
-  const [contentType, setContentType] = useState([]);
+  const [data, setData] = useState([]);
   const [status, setStatus] = useState('loading');
   const [settings, setSettings] = useState();
 
@@ -29,6 +29,7 @@ const SortModal = () => {
   const fetchSettings = async () => {
     try {
       const { data } = await axiosInstance.get(`/drag-drop-content-types/settings`);
+      console.log(data);
       setSettings(data.body);
     } catch (e) {
       console.log(e);
@@ -39,11 +40,12 @@ const SortModal = () => {
   // TODO: check field integrity 
   const initializeContentType = async () => {
     try {
-      if (settings){
+      if (settings) {
         const { data } = await axiosInstance.get(
           `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
-          );
-          if (data.results.length > 0 && !!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
+        );
+        console.log(data.results)
+        if (data.results.length > 0 && !!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
           setActive(true);
         }
       }
@@ -67,7 +69,7 @@ const SortModal = () => {
           content: (<MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={data.results[i][settings.title]}>{shortenString(data.results[i][settings.title])}</span></MenuItem>), strapiId: data.results[i].id
         });
       }
-      setContentType(list);
+      setData(data.results);
     } catch (e) {
       console.log(e);
       setStatus('error');
@@ -78,6 +80,7 @@ const SortModal = () => {
   const updateContentType = async (sortedList) => {
     try {
       // Increase performance by breaking loop after last element having a rank change is updated
+
       let rankHasChanged = false
       // Iterate over all results and append them to the list
       for (let i = 0; i < sortedList.length; i++) {
@@ -107,9 +110,19 @@ const SortModal = () => {
 
   // Render the menu
   const showMenu = () => {
-    if (!active) {
-      return
-    }
+    const SortableItem = SortableElement(({ value }) => (
+      <MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={value[settings.title]}>{shortenString(value[settings.title])}</span></MenuItem>
+    ));
+    const SortableList = SortableContainer(({ items }) => {
+      return (
+        <ul>
+          {data.map((value, index) => (
+            <SortableItem style={{ zIndex: 10 }} key={`item-${value}`} index={index} value={value} />
+          ))}
+        </ul>
+      );
+    });
+
     return (
       <>
         <SimpleMenu
@@ -117,7 +130,7 @@ const SortModal = () => {
           icon={<Layer />}
           onClick={() => { fetchContentType() }}
         >
-          <DragSortableList items={contentType} moveTransitionDuration={0.3} onSort={updateContentType} type="vertical" />
+          <SortableList items={SortableList} onSortEnd={updateContentType} />
         </SimpleMenu>
       </>
     )
