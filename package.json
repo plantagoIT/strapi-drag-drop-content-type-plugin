@@ -16,6 +16,7 @@
     "@strapi/strapi": "^4.0.0"
   },
   "dependencies": {
+    "array-move": "^4.0.0",
     "react-sortable-hoc": "^2.0.0"
   },
   "author": {

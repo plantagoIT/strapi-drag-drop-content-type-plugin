@@ -9,6 +9,7 @@ import { IconButton } from '@strapi/design-system/IconButton';
 import { Icon } from '@strapi/design-system/Icon';
 import Drag from '@strapi/icons/Drag';
 import Layer from '@strapi/icons/Layer';
+import { arrayMoveImmutable } from 'array-move';
 
 const SortModal = () => {
 
@@ -77,15 +78,16 @@ const SortModal = () => {
   };
 
   // Update all ranks via put request.
-  const updateContentType = async (sortedList) => {
+  const updateContentType = async ({ prevIndex, nextIndex }) => {
     try {
       // Increase performance by breaking loop after last element having a rank change is updated
-
+      const sortedList = arrayMoveImmutable(data, prevIndex, nextIndex);
+      console.log(sortedList);
       let rankHasChanged = false
       // Iterate over all results and append them to the list
       for (let i = 0; i < sortedList.length; i++) {
         // Only update changed values
-        if (previousSortedList.length == 0 || previousSortedList[i].strapiId != sortedList[i].strapiId) {
+        if (sortedList[i].strapiId != data[i].strapiId) {
           // Update rank via put request
           await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].strapiId}`, {
             contentType: contentTypePath,
@@ -96,11 +98,6 @@ const SortModal = () => {
           break;
         }
       }
-      // Store the state of the list to increase update performance
-      // TODO: Currently on the first event all entries are updated, 
-      //       since there is no previous list available. 
-      //       Get an initial state when first loading page.
-      previousSortedList = sortedList;
       setStatus('success');
     } catch (e) {
       console.log(e);
@@ -150,8 +147,6 @@ const SortModal = () => {
   const paths = window.location.pathname.split('/')
   const contentTypePath = paths[paths.length - 1]
 
-  // Store the drag and drop lists previous value to increase update performance
-  let previousSortedList = []
 
   return (
     <>
