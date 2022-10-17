@@ -30,7 +30,6 @@ const SortModal = () => {
   const fetchSettings = async () => {
     try {
       const { data } = await axiosInstance.get(`/drag-drop-content-types/settings`);
-      console.log(data);
       setSettings(data.body);
     } catch (e) {
       console.log(e);
@@ -78,26 +77,26 @@ const SortModal = () => {
   };
 
   // Update all ranks via put request.
-  const updateContentType = async ({ prevIndex, nextIndex }) => {
+  const updateContentType = async ({ oldIndex, newIndex }) => {
     try {
       // Increase performance by breaking loop after last element having a rank change is updated
-      const sortedList = arrayMoveImmutable(data, prevIndex, nextIndex);
-      console.log(sortedList);
+      const sortedList = arrayMoveImmutable(data, oldIndex, newIndex);
       let rankHasChanged = false
       // Iterate over all results and append them to the list
       for (let i = 0; i < sortedList.length; i++) {
         // Only update changed values
-        if (sortedList[i].strapiId != data[i].strapiId) {
+        if (sortedList[i].id != data[i].id) {
           // Update rank via put request
-          await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].strapiId}`, {
+          await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].id}`, {
             contentType: contentTypePath,
-            rank: sortedList[i].rank,
+            rank: i,
           });
           rankHasChanged = true;
         } else if (rankHasChanged) {
           break;
         }
       }
+      //setData(sortedList.sort((a, b) => a.rank - b.rank));
       setStatus('success');
     } catch (e) {
       console.log(e);
@@ -119,7 +118,6 @@ const SortModal = () => {
         </ul>
       );
     });
-
     return (
       <>
         <SimpleMenu
