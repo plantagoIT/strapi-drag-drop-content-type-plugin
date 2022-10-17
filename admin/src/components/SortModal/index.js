@@ -44,7 +44,6 @@ const SortModal = () => {
         const { data } = await axiosInstance.get(
           `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
         );
-        console.log(data.results)
         if (data.results.length > 0 && !!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
           setActive(true);
         }
@@ -62,13 +61,6 @@ const SortModal = () => {
         `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
       );
       setStatus('success');
-      // Iterate over all results and append them to the list
-      let list = [];
-      for (let i = 0; i < data.results.length; i++) {
-        list.push({
-          content: (<MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={data.results[i][settings.title]}>{shortenString(data.results[i][settings.title])}</span></MenuItem>), strapiId: data.results[i].id
-        });
-      }
       setData(data.results);
     } catch (e) {
       console.log(e);
@@ -96,7 +88,8 @@ const SortModal = () => {
           break;
         }
       }
-      //setData(sortedList.sort((a, b) => a.rank - b.rank));
+      //set new sorted data (refresh UI list component)
+      setData(sortedList);
       setStatus('success');
     } catch (e) {
       console.log(e);
@@ -104,16 +97,19 @@ const SortModal = () => {
     }
   };
 
+
+
   // Render the menu
   const showMenu = () => {
     const SortableItem = SortableElement(({ value }) => (
-      <MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={value[settings.title]}>{shortenString(value[settings.title])}</span></MenuItem>
+      <MenuItem style={{ zIndex: 10 }} ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={value[settings.title]}>{shortenString(value[settings.title])}</span></MenuItem>
     ));
+
     const SortableList = SortableContainer(({ items }) => {
       return (
         <ul>
-          {data.map((value, index) => (
-            <SortableItem style={{ zIndex: 10 }} key={`item-${value}`} index={index} value={value} />
+          {items.map((value, index) => (
+            <SortableItem key={`item-${value.id}`} index={index} value={value} />
           ))}
         </ul>
       );
@@ -125,7 +121,7 @@ const SortModal = () => {
           icon={<Layer />}
           onClick={() => { fetchContentType() }}
         >
-          <SortableList items={SortableList} onSortEnd={updateContentType} />
+          <SortableList items={data} onSortEnd={updateContentType} />
         </SimpleMenu>
       </>
     )
