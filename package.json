@@ -16,7 +16,8 @@
     "@strapi/strapi": "^4.0.0"
   },
   "dependencies": {
-    "react-drag-sortable": "^1.0.6"
+    "array-move": "^4.0.0",
+    "react-sortable-hoc": "^2.0.0"
   },
   "author": {
     "name": "Aeneas Meier",

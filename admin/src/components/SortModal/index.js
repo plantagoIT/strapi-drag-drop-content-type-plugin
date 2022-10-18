@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 
 import axiosInstance from '../../utils/axiosInstance';
 
-import DragSortableList from 'react-drag-sortable'
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { SimpleMenu, MenuItem } from '@strapi/design-system/SimpleMenu';
 import { IconButton } from '@strapi/design-system/IconButton';
 import { Icon } from '@strapi/design-system/Icon';
 import Drag from '@strapi/icons/Drag';
 import Layer from '@strapi/icons/Layer';
+import { arrayMoveImmutable } from 'array-move';
 
 const SortModal = () => {
 
   const [active, setActive] = useState(false);
-  const [contentType, setContentType] = useState([]);
+  const [data, setData] = useState([]);
   const [status, setStatus] = useState('loading');
   const [settings, setSettings] = useState();
 
@@ -39,11 +40,11 @@ const SortModal = () => {
   // TODO: check field integrity 
   const initializeContentType = async () => {
     try {
-      if (settings){
+      if (settings) {
         const { data } = await axiosInstance.get(
           `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
-          );
-          if (data.results.length > 0 && !!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
+        );
+        if (data.results.length > 0 && !!toString(data.results[0][settings.rank]) && !!data.results[0][settings.title]) {
           setActive(true);
         }
       }
@@ -60,14 +61,7 @@ const SortModal = () => {
         `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
       );
       setStatus('success');
-      // Iterate over all results and append them to the list
-      let list = [];
-      for (let i = 0; i < data.results.length; i++) {
-        list.push({
-          content: (<MenuItem ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={data.results[i][settings.title]}>{shortenString(data.results[i][settings.title])}</span></MenuItem>), strapiId: data.results[i].id
-        });
-      }
-      setContentType(list);
+      setData(data.results);
     } catch (e) {
       console.log(e);
       setStatus('error');
@@ -75,29 +69,27 @@ const SortModal = () => {
   };
 
   // Update all ranks via put request.
-  const updateContentType = async (sortedList) => {
+  const updateContentType = async ({ oldIndex, newIndex }) => {
     try {
       // Increase performance by breaking loop after last element having a rank change is updated
+      const sortedList = arrayMoveImmutable(data, oldIndex, newIndex);
       let rankHasChanged = false
       // Iterate over all results and append them to the list
       for (let i = 0; i < sortedList.length; i++) {
         // Only update changed values
-        if (previousSortedList.length == 0 || previousSortedList[i].strapiId != sortedList[i].strapiId) {
+        if (sortedList[i].id != data[i].id) {
           // Update rank via put request
-          await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].strapiId}`, {
+          await axiosInstance.put(`/drag-drop-content-types/sort-update/${sortedList[i].id}`, {
             contentType: contentTypePath,
-            rank: sortedList[i].rank,
+            rank: i,
           });
           rankHasChanged = true;
         } else if (rankHasChanged) {
           break;
         }
       }
-      // Store the state of the list to increase update performance
-      // TODO: Currently on the first event all entries are updated, 
-      //       since there is no previous list available. 
-      //       Get an initial state when first loading page.
-      previousSortedList = sortedList;
+      //set new sorted data (refresh UI list component)
+      setData(sortedList);
       setStatus('success');
     } catch (e) {
       console.log(e);
@@ -105,11 +97,23 @@ const SortModal = () => {
     }
   };
 
+
+
   // Render the menu
   const showMenu = () => {
-    if (!active) {
-      return
-    }
+    const SortableItem = SortableElement(({ value }) => (
+      <MenuItem style={{ zIndex: 10 }} ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={value[settings.title]}>{shortenString(value[settings.title])}</span></MenuItem>
+    ));
+
+    const SortableList = SortableContainer(({ items }) => {
+      return (
+        <ul>
+          {items.map((value, index) => (
+            <SortableItem key={`item-${value.id}`} index={index} value={value} />
+          ))}
+        </ul>
+      );
+    });
     return (
       <>
         <SimpleMenu
@@ -117,7 +121,7 @@ const SortModal = () => {
           icon={<Layer />}
           onClick={() => { fetchContentType() }}
         >
-          <DragSortableList items={contentType} moveTransitionDuration={0.3} onSort={updateContentType} type="vertical" />
+          <SortableList items={data} onSortEnd={updateContentType} />
         </SimpleMenu>
       </>
     )
@@ -137,8 +141,6 @@ const SortModal = () => {
   const paths = window.location.pathname.split('/')
   const contentTypePath = paths[paths.length - 1]
 
-  // Store the drag and drop lists previous value to increase update performance
-  let previousSortedList = []
 
   return (
     <>
