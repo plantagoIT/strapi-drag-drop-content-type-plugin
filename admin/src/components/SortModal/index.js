@@ -58,7 +58,7 @@ const SortModal = () => {
   const fetchContentType = async () => {
     try {
       const { data } = await axiosInstance.get(
-        `/content-manager/collection-types/${contentTypePath}?sort=rank:asc`
+        `/content-manager/collection-types/${contentTypePath}?sort=rank:asc&locale=${locale}`
       );
       setStatus('success');
       setData(data.results);
@@ -102,7 +102,7 @@ const SortModal = () => {
   // Render the menu
   const showMenu = () => {
     const SortableItem = SortableElement(({ value }) => (
-      <MenuItem style={{ zIndex: 10 }} ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={value[settings.title]}>{shortenString(value[settings.title])}</span></MenuItem>
+      <MenuItem style={{ zIndex: 10, cursor: 'all-scroll' }} ><Icon height={"0.6rem"} as={Drag} />&nbsp;<span title={value[settings.title]}>{shortenString(value[settings.title])}</span></MenuItem>
     ));
 
     const SortableList = SortableContainer(({ items }) => {
@@ -139,7 +139,9 @@ const SortModal = () => {
 
   // Get content type from url
   const paths = window.location.pathname.split('/')
+  const queryParams = new URLSearchParams(window.location.search);
   const contentTypePath = paths[paths.length - 1]
+  const locale = queryParams.get('plugins[i18n][locale]');
 
 
   return (
