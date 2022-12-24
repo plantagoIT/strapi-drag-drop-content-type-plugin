@@ -1,51 +1,51 @@
 {
-  "name": "@retikolo/drag-drop-content-types",
-  "version": "1.2.1",
-  "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
-  "strapi": {
-    "name": "drag-drop-content-types",
-    "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
-    "kind": "plugin",
-    "displayName": "Drag Drop Content Types"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
-  },
-  "peerDependencies": {
-    "@strapi/strapi": "^4.0.0"
-  },
-  "dependencies": {
-    "array-move": "^4.0.0",
-    "react-sortable-hoc": "^2.0.0"
-  },
-  "author": {
-    "name": "Aeneas Meier",
-    "email": "aeneas@retikolo.xyz",
-    "url": "https://rgb.retikolo.xyz"
-  },
-  "maintainers": [
-    {
-      "name": "Aeneas Meier",
-      "email": "aeneas@retikolo.xyz",
-      "url": "https://rgb.retikolo.xyz"
-    }
-  ],
-  "keywords": [
-    "strapi",
-    "plugin",
-    "strapi-plugin",
-    "drag",
-    "drop",
-    "drag and drop",
-    "drag drop content types",
-    "content types",
-    "sort",
-    "order"
-  ],
-  "engines": {
-    "node": ">=14.19.1 <=18.x.x",
-    "npm": ">=6.0.0"
-  },
-  "license": "MIT"
+	"name": "@retikolo/drag-drop-content-types",
+	"version": "1.2.1",
+	"description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
+	"strapi": {
+		"name": "drag-drop-content-types",
+		"description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
+		"kind": "plugin",
+		"displayName": "Drag Drop Content Types"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
+	},
+	"peerDependencies": {
+		"@strapi/strapi": "^4.5.4"
+	},
+	"dependencies": {
+		"array-move": "^4.0.0",
+		"react-sortable-hoc": "^2.0.0"
+	},
+	"author": {
+		"name": "Aeneas Meier",
+		"email": "aeneas@retikolo.xyz",
+		"url": "https://rgb.retikolo.xyz"
+	},
+	"maintainers": [
+		{
+			"name": "Aeneas Meier",
+			"email": "aeneas@retikolo.xyz",
+			"url": "https://rgb.retikolo.xyz"
+		}
+	],
+	"keywords": [
+		"strapi",
+		"plugin",
+		"strapi-plugin",
+		"drag",
+		"drop",
+		"drag and drop",
+		"drag drop content types",
+		"content types",
+		"sort",
+		"order"
+	],
+	"engines": {
+		"node": ">=14.19.1 <=18.x.x",
+		"npm": ">=6.0.0"
+	},
+	"license": "MIT"
 }
