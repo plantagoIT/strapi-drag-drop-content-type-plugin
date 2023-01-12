@@ -30,12 +30,13 @@ const SortModal = () => {
 
 	const dispatch = useDispatch();
 
-	// Use strapi hook to reorder list after drag and drop
+	// Show loading symbol after refetching the entries
 	const refetchEntries = React.useCallback(
 		() => dispatch(getData()),
 		[dispatch]
-	);
-
+		);
+		
+	// Use strapi hook to reorder list after drag and drop
 	const refetchEntriesSucceeded = React.useCallback(
 		(pagination, newData) =>
 			dispatch(getDataSucceeded(pagination, newData)),
@@ -62,6 +63,7 @@ const SortModal = () => {
 				contentType: contentTypePath,
 				start: Math.max(0, (currentPage - 1) * pageSize - 1),
 				limit: currentPage == 1 ? pageSize + 1 : pageSize + 2,
+				locale: locale,
 			}
 		);
 	}
@@ -138,12 +140,12 @@ const SortModal = () => {
 					break;
 				}
 			}
-
+			// distinguish last page from full/first page
+			let sortedListEntries = (sortedList.length < pageSize && currentPage != 1) ? sortedList.slice(1, sortedList.length) : sortedList.slice(0, pageSize)
 			// set new sorted data (refresh UI list component)
-			console.log(sortedList.slice(0, pageSize));
 			setData(sortedList);
 			setStatus("success");
-			afterUpdate(pagination, (sortedList.length < pageSize && currentPage != 1) ? sortedList.slice(1, sortedList.length) : sortedList.slice(0, pageSize));
+			afterUpdate(pagination, sortedListEntries);
 		} catch (e) {
 			console.log(e);
 			setStatus("error");

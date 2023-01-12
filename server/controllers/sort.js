@@ -41,13 +41,14 @@ async function setSettings(settings) {
 }
 
 // Search for entries ordered by rank
-async function index(contentType, start, limit) {
+async function index(contentType, start, limit, locale) {
   return await strapi.entityService.findMany(contentType, {
     sort: {
       rank: 'asc'
     },
     start: start,
     limit: limit,
+    locale: locale,
   }); 
 }
 
@@ -80,7 +81,7 @@ module.exports = {
   },
   async index(ctx) {
     try {
-      ctx.body = await index(ctx.request.body.contentType, ctx.request.body.start, ctx.request.body.limit);
+      ctx.body = await index(ctx.request.body.contentType, ctx.request.body.start, ctx.request.body.limit, ctx.request.body.locale);
     } catch (err) {
       ctx.throw(500, err);
     }
