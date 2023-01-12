@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
-
 import { useDispatch } from "react-redux";
 import {
 	getData,
 	getDataSucceeded,
 } from "@strapi/admin/admin/src/content-manager/pages/ListView/actions";
-
 import axiosInstance from "../../utils/axiosInstance";
-
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
-
+import { arrayMoveImmutable } from "array-move";
+import { useQueryParams } from "../../utils/useQueryParams";
 import { SimpleMenu, MenuItem } from "@strapi/design-system/SimpleMenu";
 import { IconButton } from "@strapi/design-system/IconButton";
 import { Icon } from "@strapi/design-system/Icon";
 import Drag from "@strapi/icons/Drag";
 import Layer from "@strapi/icons/Layer";
-import { arrayMoveImmutable } from "array-move";
-
-import { useQueryParams } from "../../utils/useQueryParams";
 
 const DEFAULT_SORT_MENU_PAGE_SIZE = 10;
 
@@ -35,6 +30,7 @@ const SortModal = () => {
 
 	const dispatch = useDispatch();
 
+	// Use strapi hook to reorder list after drag and drop
 	const refetchEntries = React.useCallback(
 		() => dispatch(getData()),
 		[dispatch]
@@ -45,14 +41,6 @@ const SortModal = () => {
 			dispatch(getDataSucceeded(pagination, newData)),
 		[dispatch, pagination, data]
 	);
-
-	// Shorten string to prevent line break
-	const shortenString = (string) => {
-		if (string.length > 40) {
-			return string.substring(0, 37) + "...";
-		}
-		return string;
-	};
 
 	// Fetch settings from configuration
 	const fetchSettings = async () => {
@@ -66,6 +54,18 @@ const SortModal = () => {
 		}
 	};
 
+	// Fetch page entries from the sort controller
+	const getPageEntries = async () => {
+		return await axiosInstance.post(
+			`/drag-drop-content-types/sort-index`,
+			{
+				contentType: contentTypePath,
+				start: Math.max(0, (currentPage - 1) * pageSize - 1),
+				limit: currentPage == 1 ? pageSize + 1 : pageSize + 2,
+			}
+		);
+	}
+
 	// Check database if the desired fields are available
 	// TODO: check field integrity
 	const initializeContentType = async () => {
@@ -74,10 +74,11 @@ const SortModal = () => {
 				const { data } = await axiosInstance.get(
 					`/content-manager/collection-types/${contentTypePath}?sort=rank:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`
 				);
+				const entries = await getPageEntries()
 				if (
-					data.results.length > 0 &&
-					!!toString(data.results[0][settings.rank]) &&
-					!!data.results[0][settings.title]
+					entries.data.length > 0 &&
+					!!toString(entries.data[0][settings.rank]) &&
+					!!entries.data[0][settings.title]
 				) {
 					setActive(true);
 				}
@@ -94,13 +95,22 @@ const SortModal = () => {
 			const { data } = await axiosInstance.get(
 				`/content-manager/collection-types/${contentTypePath}?sort=rank:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`
 			);
+			const entries = await getPageEntries();
 			setStatus("success");
-			setData(data.results);
+			setData(entries.data);
 			setPagination(data.pagination);
 		} catch (e) {
 			console.log(e);
 			setStatus("error");
 		}
+	};
+
+	// Shorten string to prevent line break
+	const shortenString = (string) => {
+		if (string.length > 40) {
+			return string.substring(0, 37) + "...";
+		}
+		return string;
 	};
 
 	// Update all ranks via put request.
@@ -110,7 +120,7 @@ const SortModal = () => {
 			const sortedList = arrayMoveImmutable(data, oldIndex, newIndex);
 			let rankHasChanged = false;
 			// Iterate over all results and append them to the list
-			for (let i = 0; i < pageSize; i++) {
+			for (let i = 0; i < sortedList.length; i++) {
 				// Only update changed values
 				if (sortedList[i].id != data[i].id) {
 					const newRank =
@@ -129,10 +139,11 @@ const SortModal = () => {
 				}
 			}
 
-			//set new sorted data (refresh UI list component)
+			// set new sorted data (refresh UI list component)
+			console.log(sortedList.slice(0, pageSize));
 			setData(sortedList);
 			setStatus("success");
-			afterUpdate(pagination, sortedList);
+			afterUpdate(pagination, (sortedList.length < pageSize && currentPage != 1) ? sortedList.slice(1, sortedList.length) : sortedList.slice(0, pageSize));
 		} catch (e) {
 			console.log(e);
 			setStatus("error");

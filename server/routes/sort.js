@@ -22,6 +22,15 @@ module.exports = {
       },
     },
     {
+      method: "POST",
+      path: "/sort-index",
+      handler: "sort.index",
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+    {
       method: "PUT",
       path: "/sort-update/:id",
       handler: "sort.update",

@@ -40,6 +40,17 @@ async function setSettings(settings) {
   return pluginStore.get({ key: 'settings' });
 }
 
+// Search for entries ordered by rank
+async function index(contentType, start, limit) {
+  return await strapi.entityService.findMany(contentType, {
+    sort: {
+      rank: 'asc'
+    },
+    start: start,
+    limit: limit,
+  }); 
+}
+
 // Update rank of specified content type
 async function update(id, contentType, rank) {
   return await strapi.query(contentType).update({
@@ -63,6 +74,13 @@ module.exports = {
     try {
       await setSettings(body);
       ctx.body = await getSettings();
+    } catch (err) {
+      ctx.throw(500, err);
+    }
+  },
+  async index(ctx) {
+    try {
+      ctx.body = await index(ctx.request.body.contentType, ctx.request.body.start, ctx.request.body.limit);
     } catch (err) {
       ctx.throw(500, err);
     }
