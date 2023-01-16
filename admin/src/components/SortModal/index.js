@@ -15,7 +15,6 @@ const DEFAULT_SORT_MENU_PAGE_SIZE = 10;
 const NUMBER_OF_ENTRIES_FROM_NEXT_PAGES = 3;
 
 const SortModal = () => {
-	const [active, setActive] = useState(false);
 	const [data, setData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageSize, setPageSize] = useState(DEFAULT_SORT_MENU_PAGE_SIZE);
@@ -80,7 +79,7 @@ const SortModal = () => {
 					!!toString(entries.data[0][settings.rank]) &&
 					!!entries.data[0][settings.title]
 				) {
-					setActive(true);
+					setStatus("success");
 				}
 			}
 		} catch (e) {
@@ -194,6 +193,7 @@ const SortModal = () => {
 			);
 		});
 		return (
+			status == 'success' ?
 			<>
 				<SimpleMenu
 					as={IconButton}
@@ -205,6 +205,8 @@ const SortModal = () => {
 					<SortableList items={data} onSortEnd={updateContentType} />
 				</SimpleMenu>
 			</>
+			:
+			<></>
 		);
 	};
 
