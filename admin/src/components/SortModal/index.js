@@ -70,9 +70,6 @@ const SortModal = () => {
 	const initializeContentType = async () => {
 		try {
 			if (settings) {
-				const { data } = await axiosInstance.get(
-					`/content-manager/collection-types/${contentTypePath}?sort=rank:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`
-				);
 				const entries = await getPageEntries()
 				if (
 					entries.data.length > 0 &&
