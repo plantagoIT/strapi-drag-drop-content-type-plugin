@@ -5,8 +5,6 @@
 
 ![drag-drop-preview](https://user-images.githubusercontent.com/37687705/191790500-f7bc7968-cf10-4448-a049-3350d96d2d8b.png)
 
-## ⚠ Important
-This plugin might NOT behave like you expect. Since Strapi does not allow to fully access all page components, the content itself cannot be drag-and-dropped. Instead this plugin adds a panel, which allow sort content via drag-and-drop. This is not a very intuitive way, but might be better than nothing...
 
 ## ⏳ Installation
 
@@ -45,5 +43,9 @@ Assuming you go with the default settings, you can make a request on the followi
 http://localhost:1337/api/foo?sort=rank:asc
 ```
 
+## ⚠ Note
+This plugin might NOT behave as you expect. Since Strapi does not allow to fully access all page components, the content itself cannot be drag-and-dropped. Instead this plugin adds a panel, which allow sort content via drag-and-drop. This is not a very intuitive way, but might be better than nothing...
+
+
 ## 🤝 Contribute
-Feel free to fork and make pull requests to this plugin. All input is welcome!
+Feel free to fork and make pull requests to this plugin. All input is welcome - thanks for all contributions so far!
