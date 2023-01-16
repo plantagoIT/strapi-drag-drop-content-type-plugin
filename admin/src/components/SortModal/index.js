@@ -9,12 +9,14 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
 import { useQueryParams } from "../../utils/useQueryParams";
 import { SimpleMenu, MenuItem } from "@strapi/design-system/SimpleMenu";
+import { Divider } from '@strapi/design-system';
 import { IconButton } from "@strapi/design-system/IconButton";
 import { Icon } from "@strapi/design-system/Icon";
 import Drag from "@strapi/icons/Drag";
 import Layer from "@strapi/icons/Layer";
 
 const DEFAULT_SORT_MENU_PAGE_SIZE = 10;
+const NUMBER_OF_ENTRIES_FROM_NEXT_PAGES = 3;
 
 const SortModal = () => {
 	const [active, setActive] = useState(false);
@@ -34,8 +36,8 @@ const SortModal = () => {
 	const refetchEntries = React.useCallback(
 		() => dispatch(getData()),
 		[dispatch]
-		);
-		
+	);
+
 	// Use strapi hook to reorder list after drag and drop
 	const refetchEntriesSucceeded = React.useCallback(
 		(pagination, newData) =>
@@ -61,8 +63,8 @@ const SortModal = () => {
 			`/drag-drop-content-types/sort-index`,
 			{
 				contentType: contentTypePath,
-				start: Math.max(0, (currentPage - 1) * pageSize - 1),
-				limit: currentPage == 1 ? pageSize + 1 : pageSize + 2,
+				start: Math.max(0, (currentPage - 1) * pageSize - NUMBER_OF_ENTRIES_FROM_NEXT_PAGES),
+				limit: currentPage == 1 ? pageSize + NUMBER_OF_ENTRIES_FROM_NEXT_PAGES : pageSize + 2 * NUMBER_OF_ENTRIES_FROM_NEXT_PAGES,
 				locale: locale,
 			}
 		);
@@ -141,7 +143,12 @@ const SortModal = () => {
 				}
 			}
 			// distinguish last page from full/first page
-			let sortedListEntries = (sortedList.length < pageSize && currentPage != 1) ? sortedList.slice(1, sortedList.length) : sortedList.slice(0, pageSize)
+			let sortedListEntries =
+				(sortedList.length < pageSize && currentPage != 1)
+					?
+					sortedList.slice(NUMBER_OF_ENTRIES_FROM_NEXT_PAGES, sortedList.length)
+					:
+					sortedList.slice(0, pageSize)
 			// set new sorted data (refresh UI list component)
 			setData(sortedList);
 			setStatus("success");
@@ -161,7 +168,7 @@ const SortModal = () => {
 
 	// Render the menu
 	const showMenu = () => {
-		const SortableItem = SortableElement(({ value }) => (
+		const SortableItem = SortableElement(({ value, sortIndex }) => (
 			<MenuItem style={{ zIndex: 10, cursor: "all-scroll" }}>
 				<Icon height={"0.6rem"} as={Drag} />
 				&nbsp;
@@ -178,6 +185,7 @@ const SortModal = () => {
 						<SortableItem
 							key={`item-${value.id}`}
 							index={index}
+							sortIndex={index}
 							value={value}
 						/>
 					))}
