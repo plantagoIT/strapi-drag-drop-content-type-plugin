@@ -49,6 +49,7 @@ async function index(contentType, start, limit, locale) {
     populate: 'localizations',
     start: start,
     limit: limit,
+    locale: locale,
   });
 }
 
