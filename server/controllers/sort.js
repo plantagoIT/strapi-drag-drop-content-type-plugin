@@ -46,10 +46,10 @@ async function index(contentType, start, limit, locale) {
     sort: {
       rank: 'asc'
     },
+    populate: 'localizations',
     start: start,
     limit: limit,
-    locale: locale,
-  }); 
+  });
 }
 
 // Update rank of specified content type
