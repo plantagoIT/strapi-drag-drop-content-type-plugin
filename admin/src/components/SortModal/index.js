@@ -163,7 +163,7 @@ const SortModal = () => {
 
 	// Render the menu
 	const showMenu = () => {
-		const SortableItem = SortableElement(({ value, sortIndex }) => (
+		const SortableItem = SortableElement(({ value }) => (
 			<MenuItem style={{ zIndex: 10, cursor: "all-scroll" }}>
 				<Icon height={"0.6em"} as={Drag} />
 				&nbsp;
@@ -180,7 +180,6 @@ const SortModal = () => {
 						<SortableItem
 							key={`item-${value.id}`}
 							index={index}
-							sortIndex={index}
 							value={value}
 						/>
 					))}
