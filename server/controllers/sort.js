@@ -46,7 +46,7 @@ async function index(contentType, start, limit, locale) {
     sort: {
       rank: 'asc'
     },
-    populate: 'localizations',
+    populate: '*',
     start: start,
     limit: limit,
     locale: locale,
