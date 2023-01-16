@@ -143,16 +143,20 @@ const SortModal = () => {
 				}
 			}
 			// distinguish last page from full/first page
-			let sortedListEntries =
-				(sortedList.length < pageSize && currentPage != 1)
+			let sortedListViewEntries =
+				currentPage == 1
 					?
-					sortedList.slice(NUMBER_OF_ENTRIES_FROM_NEXT_PAGES, sortedList.length)
-					:
 					sortedList.slice(0, pageSize)
+					:
+					sortedList.length < pageSize
+						?
+						sortedList.slice(NUMBER_OF_ENTRIES_FROM_NEXT_PAGES, sortedList.length)
+						:
+						sortedList.slice(NUMBER_OF_ENTRIES_FROM_NEXT_PAGES, pageSize + NUMBER_OF_ENTRIES_FROM_NEXT_PAGES)
 			// set new sorted data (refresh UI list component)
 			setData(sortedList);
 			setStatus("success");
-			afterUpdate(pagination, sortedListEntries);
+			afterUpdate(pagination, sortedListViewEntries);
 		} catch (e) {
 			console.log(e);
 			setStatus("error");
