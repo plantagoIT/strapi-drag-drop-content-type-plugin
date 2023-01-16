@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-	getData,
-	getDataSucceeded,
-} from "@strapi/admin/admin/src/content-manager/pages/ListView/actions";
+import { getData, getDataSucceeded } from "@strapi/admin/admin/src/content-manager/pages/ListView/actions";
 import axiosInstance from "../../utils/axiosInstance";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
 import { useQueryParams } from "../../utils/useQueryParams";
 import { SimpleMenu, MenuItem } from "@strapi/design-system/SimpleMenu";
-import { Divider } from '@strapi/design-system';
 import { IconButton } from "@strapi/design-system/IconButton";
 import { Icon } from "@strapi/design-system/Icon";
 import Drag from "@strapi/icons/Drag";
