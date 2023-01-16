@@ -88,13 +88,11 @@ const SortModal = () => {
 	// Fetch data from the database via get request
 	const fetchContentType = async () => {
 		try {
-			// TODO: remove this since only used to get pagination
-			const { data } = await axiosInstance.get(
-				`/content-manager/collection-types/${contentTypePath}?sort=rank:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`
-			);
 			const entries = await getPageEntries();
 			setStatus("success");
 			setData(entries.data);
+			// TODO: remove this line and get pagination from elsewhere
+			const { data } = await axiosInstance.get(`/content-manager/collection-types/${contentTypePath}?sort=rank:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`);
 			setPagination(data.pagination);
 		} catch (e) {
 			console.log(e);
