@@ -171,7 +171,7 @@ const SortModal = () => {
 	const showMenu = () => {
 		const SortableItem = SortableElement(({ value, sortIndex }) => (
 			<MenuItem style={{ zIndex: 10, cursor: "all-scroll" }}>
-				<Icon height={"0.6rem"} as={Drag} />
+				<Icon height={"0.6em"} as={Drag} />
 				&nbsp;
 				<span title={value[settings.title]}>
 					{shortenString(value[settings.title])}
