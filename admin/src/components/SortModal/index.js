@@ -100,14 +100,6 @@ const SortModal = () => {
 		}
 	};
 
-	// Shorten string to prevent line break
-	const shortenString = (string) => {
-		if (string.length > 40) {
-			return string.substring(0, 37) + "...";
-		}
-		return string;
-	};
-
 	// Update all ranks via put request.
 	const updateContentType = async ({ oldIndex, newIndex }) => {
 		try {
