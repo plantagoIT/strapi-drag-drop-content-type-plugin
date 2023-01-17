@@ -165,25 +165,37 @@ const SortModal = () => {
 	const showMenu = () => {
 		const SortableItem = SortableElement(({ value }) => (
 			<MenuItem style={{ zIndex: 10, cursor: "all-scroll" }}>
-				<Icon height={"0.6em"} as={Drag} />
-				&nbsp;
-				<span title={value[settings.title]}>
-					{shortenString(value[settings.title])}
-				</span>
+				<div
+					style={{
+						overflowX: "hidden",
+						textOverflow: "ellipsis",
+						whiteSpace: "nowrap",
+					}}
+				>
+					<Icon height={"0.6em"} as={Drag} />
+					&nbsp;
+					<span title={value[settings.title]}>
+						{/* {shortenString(value[settings.title])} */}
+						{value[settings.title]}
+					</span>
+				</div>
 			</MenuItem>
 		));
 
 		const SortableList = SortableContainer(({ items }) => {
 			return (
-				<ul>
-					{items.map((value, index) => (
-						<SortableItem
-							key={`item-${value.id}`}
-							index={index}
-							value={value}
-						/>
-					))}
-				</ul>
+				<div style={{ maxWidth: "280px" }}>
+					<ul>
+						{items.map((value, index) => (
+							<SortableItem
+								key={`item-${value.id}`}
+								index={index}
+								sortIndex={index}
+								value={value}
+							/>
+						))}
+					</ul>
+				</div>
 			);
 		});
 		return (
