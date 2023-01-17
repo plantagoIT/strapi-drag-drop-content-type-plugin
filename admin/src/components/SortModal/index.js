@@ -5,6 +5,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
 import { useQueryParams } from "../../utils/useQueryParams";
+import { Button, Divider } from '@strapi/design-system';
 import { SimpleMenu, MenuItem } from "@strapi/design-system/SimpleMenu";
 import { IconButton } from "@strapi/design-system/IconButton";
 import { Icon } from "@strapi/design-system/Icon";
@@ -12,7 +13,7 @@ import Drag from "@strapi/icons/Drag";
 import Layer from "@strapi/icons/Layer";
 
 const DEFAULT_SORT_MENU_PAGE_SIZE = 10;
-const NUMBER_OF_ENTRIES_FROM_NEXT_PAGES = 3;
+const DEFAULT_NUMBER_OF_ENTRIES_FROM_NEXT_PAGE = 3;
 
 const SortModal = () => {
 	const [data, setData] = useState([]);
@@ -21,6 +22,7 @@ const SortModal = () => {
 	const [pagination, setPagination] = useState();
 	const [status, setStatus] = useState("loading");
 	const [settings, setSettings] = useState();
+	const [noEntriesFromNextPage, setNoEntriesFromNextPage] = useState(DEFAULT_NUMBER_OF_ENTRIES_FROM_NEXT_PAGE);
 
 	// TODO: Refactor get queryParams to hook
 	const [params] = useQueryParams();
@@ -58,8 +60,8 @@ const SortModal = () => {
 			`/drag-drop-content-types/sort-index`,
 			{
 				contentType: contentTypePath,
-				start: Math.max(0, (currentPage - 1) * pageSize - NUMBER_OF_ENTRIES_FROM_NEXT_PAGES),
-				limit: currentPage == 1 ? pageSize + NUMBER_OF_ENTRIES_FROM_NEXT_PAGES : pageSize + 2 * NUMBER_OF_ENTRIES_FROM_NEXT_PAGES,
+				start: Math.max(0, (currentPage - 1) * pageSize - noEntriesFromNextPage),
+				limit: currentPage == 1 ? pageSize + noEntriesFromNextPage : pageSize + 2 * noEntriesFromNextPage,
 				locale: locale,
 			}
 		);
@@ -133,9 +135,9 @@ const SortModal = () => {
 					:
 					sortedList.length < pageSize
 						?
-						sortedList.slice(NUMBER_OF_ENTRIES_FROM_NEXT_PAGES, sortedList.length)
+						sortedList.slice(noEntriesFromNextPage, sortedList.length)
 						:
-						sortedList.slice(NUMBER_OF_ENTRIES_FROM_NEXT_PAGES, pageSize + NUMBER_OF_ENTRIES_FROM_NEXT_PAGES)
+						sortedList.slice(noEntriesFromNextPage, pageSize + noEntriesFromNextPage)
 			// set new sorted data (refresh UI list component)
 			setData(sortedList);
 			setStatus("success");
@@ -155,6 +157,7 @@ const SortModal = () => {
 
 	// Render the menu
 	const showMenu = () => {
+
 		const SortableItem = SortableElement(({ value }) => (
 			<MenuItem style={{ zIndex: 10, cursor: "all-scroll" }}>
 				<div
@@ -167,7 +170,6 @@ const SortModal = () => {
 					<Icon height={"0.6em"} as={Drag} />
 					&nbsp;
 					<span title={value[settings.title]}>
-						{/* {shortenString(value[settings.title])} */}
 						{value[settings.title]}
 					</span>
 				</div>
@@ -187,24 +189,31 @@ const SortModal = () => {
 							/>
 						))}
 					</ul>
+					<Divider unsetMargin={false} />
+					<Button
+						size="S"
+						disabled={noEntriesFromNextPage + listIncrementSize >= data.length ? true : false}
+						onClick={() => { setNoEntriesFromNextPage(noEntriesFromNextPage + listIncrementSize) }}
+					>Show more</Button>
 				</div>
 			);
 		});
 		return (
+			// Only show menu when the content type has needed fields
 			status == 'success' ?
-			<>
-				<SimpleMenu
-					as={IconButton}
-					icon={<Layer />}
-					onClick={() => {
-						fetchContentType();
-					}}
-				>
-					<SortableList items={data} onSortEnd={updateContentType} />
-				</SimpleMenu>
-			</>
-			:
-			<></>
+				<>
+					<SimpleMenu
+						as={IconButton}
+						icon={<Layer />}
+						onClick={() => {
+							fetchContentType();
+						}}
+					>
+						<SortableList items={data} onSortEnd={updateContentType} />
+					</SimpleMenu>
+				</>
+				:
+				<></>
 		);
 	};
 
@@ -217,6 +226,11 @@ const SortModal = () => {
 	useEffect(() => {
 		initializeContentType();
 	}, [settings]);
+
+	// Update menu when loading more elements
+	useEffect(() => {
+		fetchContentType();
+	}, [noEntriesFromNextPage])
 
 	// Sync entries in sort menu to match current page of ListView when content-manager page changes
 	useEffect(() => {
@@ -234,6 +248,7 @@ const SortModal = () => {
 	const queryParams = new URLSearchParams(window.location.search);
 	const contentTypePath = paths[paths.length - 1];
 	const locale = queryParams.get("plugins[i18n][locale]");
+	const listIncrementSize = pageSize / 2;
 
 	return <>{showMenu()}</>;
 };
