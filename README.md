@@ -3,7 +3,7 @@
   <h1>Strapi plugin drag-drop-content-types</h1>
 </div>
 
-![drag-drop-preview](https://user-images.githubusercontent.com/37687705/191790500-f7bc7968-cf10-4448-a049-3350d96d2d8b.png)
+![dragdropcrop](https://user-images.githubusercontent.com/37687705/212884821-356ec68c-b71a-4b89-9e99-8a625f84cfbe.gif)
 
 
 ## ⏳ Installation
@@ -42,10 +42,6 @@ Assuming you go with the default settings, you can make a request on the followi
 ```
 http://localhost:1337/api/foo?sort=rank:asc
 ```
-
-## ⚠ Note
-This plugin might NOT behave as you expect. Since Strapi does not allow to fully access all page components, the content itself cannot be drag-and-dropped. Instead this plugin adds a panel, which allow sort content via drag-and-drop. This is not a very intuitive way, but might be better than nothing...
-
 
 ## 🤝 Contribute
 Feel free to fork and make pull requests to this plugin. All input is welcome - thanks for all contributions so far!
