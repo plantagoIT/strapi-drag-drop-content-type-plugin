@@ -17,7 +17,8 @@
 	},
 	"dependencies": {
 		"array-move": "^4.0.0",
-		"react-sortable-hoc": "^2.0.0"
+		"react-sortable-hoc": "^2.0.0",
+		"zod": "^3.20.2"
 	},
 	"author": {
 		"name": "Aeneas Meier",
