@@ -59,10 +59,10 @@ const SortModal = () => {
 		return await axiosInstance.post(
 			`/drag-drop-content-types/sort-index`,
 			{
-			contentType: contentTypePath,
+				contentType: contentTypePath,
 				start: Math.max(0, (currentPage - 1) * pageSize - noEntriesFromNextPage),
 				limit: currentPage == 1 ? pageSize + noEntriesFromNextPage : pageSize + 2 * noEntriesFromNextPage,
-			locale: locale,
+				locale: locale,
 			}
 		);
 	}
