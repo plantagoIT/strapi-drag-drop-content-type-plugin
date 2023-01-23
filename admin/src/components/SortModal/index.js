@@ -60,6 +60,7 @@ const SortModal = () => {
 			`/drag-drop-content-types/sort-index`,
 			{
 				contentType: contentTypePath,
+				rankFieldName: settings.rank,
 				start: Math.max(0, (currentPage - 1) * pageSize - noEntriesFromNextPage),
 				limit: currentPage == 1 ? pageSize + noEntriesFromNextPage : pageSize + 2 * noEntriesFromNextPage,
 				locale: locale,
@@ -119,6 +120,7 @@ const SortModal = () => {
 						`/drag-drop-content-types/sort-update/${sortedList[i].id}`,
 						{
 							contentType: contentTypePath,
+							rankFieldName: settings.rank,
 							rank: newRank,
 						}
 					);
