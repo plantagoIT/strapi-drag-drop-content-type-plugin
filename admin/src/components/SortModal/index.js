@@ -231,7 +231,9 @@ const SortModal = () => {
 
 	// Update menu when loading more elements
 	useEffect(() => {
-		fetchContentType();
+		if (settings){
+			fetchContentType();
+		}
 	}, [noEntriesFromNextPage])
 
 	// Sync entries in sort menu to match current page of ListView when content-manager page changes
