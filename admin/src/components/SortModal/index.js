@@ -73,7 +73,6 @@ const SortModal = () => {
 
 	// Fetch page entries from the sort controller
 	const getPageEntries = async () => {
-		console.log("PAGIN",currentPage == 1, noEntriesFromNextPage,  pageSize, pageSize + noEntriesFromNextPage,  pageSize + 2 * noEntriesFromNextPage, )
 		return await axiosInstance.post(
 			`/drag-drop-content-types/sort-index`,
 			{
@@ -196,7 +195,6 @@ const SortModal = () => {
 		));
 
 		const SortableList = SortableContainer(({ items }) => {
-			console.log(noEntriesFromNextPage , listIncrementSize, data.length);
 			return (
 				<div style={{ maxWidth: "280px" }}>
 					<ul>
