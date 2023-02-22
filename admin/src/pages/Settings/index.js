@@ -111,7 +111,7 @@ const Settings = () => {
                     <TextInput
                       placeholder="Title"
                       label="Title Field Name"
-                      hint="You must create a Short Text Field with this label in the Content-Type Builder"
+                      hint="Select or create a Short Text Field with this label in the Content-Type Builder. Leave blank to use content-type entry title"
                       name="content"
                       onChange={e => {
                         setSettings({
