@@ -73,6 +73,7 @@ const SortModal = () => {
 
 	// Fetch page entries from the sort controller
 	const getPageEntries = async () => {
+		console.log("PAGIN",currentPage == 1, noEntriesFromNextPage,  pageSize, pageSize + noEntriesFromNextPage,  pageSize + 2 * noEntriesFromNextPage, )
 		return await axiosInstance.post(
 			`/drag-drop-content-types/sort-index`,
 			{
@@ -132,23 +133,11 @@ const SortModal = () => {
 				if (sortedList[i].id != data[i].id) {
 					const newRank =
 						parseInt(pageSize * (currentPage - 1) + i) || 0;
-<<<<<<< HEAD
 					const update = {
 						id: sortedList[i].id,
 						rank: newRank,
 					};
 					rankUpdates.push(update);
-=======
-					// Update rank via put request
-					await axiosInstance.put(
-						`/drag-drop-content-types/sort-update/${sortedList[i].id}`,
-						{
-							contentType: contentTypePath,
-							rankFieldName: settings.rank,
-							rank: newRank,
-						}
-					);
->>>>>>> 9c1a9c3 (Sets title and pagination from content-type config)
 					rankHasChanged = true;
 				} else if (rankHasChanged) {
 					break;
@@ -211,6 +200,7 @@ const SortModal = () => {
 		));
 
 		const SortableList = SortableContainer(({ items }) => {
+			console.log(noEntriesFromNextPage , listIncrementSize, data.length);
 			return (
 				<div style={{ maxWidth: "280px" }}>
 					<ul>
