@@ -12,17 +12,15 @@ import { Icon } from "@strapi/design-system/Icon";
 import Drag from "@strapi/icons/Drag";
 import Layer from "@strapi/icons/Layer";
 
-const DEFAULT_SORT_MENU_PAGE_SIZE = 10;
-const DEFAULT_NUMBER_OF_ENTRIES_FROM_NEXT_PAGE = 3;
-
 const SortModal = () => {
 	const [data, setData] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [pageSize, setPageSize] = useState(DEFAULT_SORT_MENU_PAGE_SIZE);
+	const [pageSize, setPageSize] = useState();
 	const [pagination, setPagination] = useState();
 	const [status, setStatus] = useState("loading");
+	const [mainField, setMainField] = useState('id');
 	const [settings, setSettings] = useState();
-	const [noEntriesFromNextPage, setNoEntriesFromNextPage] = useState(DEFAULT_NUMBER_OF_ENTRIES_FROM_NEXT_PAGE);
+	const [noEntriesFromNextPage, setNoEntriesFromNextPage] = useState();
 
 	// TODO: Refactor get queryParams to hook
 	const [params] = useQueryParams();
@@ -42,13 +40,32 @@ const SortModal = () => {
 		[dispatch, pagination, data]
 	);
 
+	// Fetch content type config settings
+	const fetchContentTypeConfig = async () => {
+		// TODO: tie this in with middleware with the request that is already being made on page load
+		try {
+			const { data } = await axiosInstance.get(
+				`/content-manager/content-types/${contentTypePath}/configuration`
+			);
+			setMainField(data.data.contentType.settings.mainField);
+			setPageSize(data.data.contentType.settings.pageSize);
+			setNoEntriesFromNextPage(data.data.contentType.settings.pageSize / 2);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	// Fetch settings from configuration
 	const fetchSettings = async () => {
 		try {
 			const { data } = await axiosInstance.get(
 				`/drag-drop-content-types/settings`
 			);
-			setSettings(data.body);
+			let fetchedSettings = {
+				rank: data.body.rank,
+				title: data.body.title.length > 0 ? data.body.title : mainField
+			}
+			setSettings(fetchedSettings);
 		} catch (e) {
 			console.log(e);
 		}
@@ -56,10 +73,12 @@ const SortModal = () => {
 
 	// Fetch page entries from the sort controller
 	const getPageEntries = async () => {
+		console.log("PAGIN",currentPage == 1, noEntriesFromNextPage,  pageSize, pageSize + noEntriesFromNextPage,  pageSize + 2 * noEntriesFromNextPage, )
 		return await axiosInstance.post(
 			`/drag-drop-content-types/sort-index`,
 			{
 				contentType: contentTypePath,
+				rankFieldName: settings.rank,
 				start: Math.max(0, (currentPage - 1) * pageSize - noEntriesFromNextPage),
 				limit: currentPage == 1 ? pageSize + noEntriesFromNextPage : pageSize + 2 * noEntriesFromNextPage,
 				locale: locale,
@@ -75,8 +94,7 @@ const SortModal = () => {
 				const entries = await getPageEntries()
 				if (
 					entries.data.length > 0 &&
-					!!toString(entries.data[0][settings.rank]) &&
-					!!entries.data[0][settings.title]
+					!!toString(entries.data[0][settings.rank])
 				) {
 					setStatus("success");
 				}
@@ -115,11 +133,23 @@ const SortModal = () => {
 				if (sortedList[i].id != data[i].id) {
 					const newRank =
 						parseInt(pageSize * (currentPage - 1) + i) || 0;
+<<<<<<< HEAD
 					const update = {
 						id: sortedList[i].id,
 						rank: newRank,
 					};
 					rankUpdates.push(update);
+=======
+					// Update rank via put request
+					await axiosInstance.put(
+						`/drag-drop-content-types/sort-update/${sortedList[i].id}`,
+						{
+							contentType: contentTypePath,
+							rankFieldName: settings.rank,
+							rank: newRank,
+						}
+					);
+>>>>>>> 9c1a9c3 (Sets title and pagination from content-type config)
 					rankHasChanged = true;
 				} else if (rankHasChanged) {
 					break;
@@ -182,6 +212,7 @@ const SortModal = () => {
 		));
 
 		const SortableList = SortableContainer(({ items }) => {
+			console.log(noEntriesFromNextPage , listIncrementSize, data.length);
 			return (
 				<div style={{ maxWidth: "280px" }}>
 					<ul>
@@ -197,7 +228,7 @@ const SortModal = () => {
 					<Divider unsetMargin={false} />
 					<Button
 						size="S"
-						disabled={noEntriesFromNextPage + listIncrementSize >= data.length ? true : false}
+						disabled={noEntriesFromNextPage + listIncrementSize >= data.length - 1 ? true : false}
 						onClick={() => { setNoEntriesFromNextPage(noEntriesFromNextPage + listIncrementSize) }}
 					>Show more</Button>
 				</div>
@@ -222,10 +253,15 @@ const SortModal = () => {
 		);
 	};
 
+	// Fetch content-type on page render
+	useEffect(() => {
+		fetchContentTypeConfig();
+	}, []);
+
 	// Fetch settings on page render
 	useEffect(() => {
 		fetchSettings();
-	}, []);
+	}, [mainField]);
 
 	// Update view when settings change
 	useEffect(() => {
@@ -234,7 +270,9 @@ const SortModal = () => {
 
 	// Update menu when loading more elements
 	useEffect(() => {
-		fetchContentType();
+		if (settings){
+			fetchContentType();
+		}
 	}, [noEntriesFromNextPage])
 
 	// Sync entries in sort menu to match current page of ListView when content-manager page changes
