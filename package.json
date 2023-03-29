@@ -1,6 +1,6 @@
 {
 	"name": "@retikolo/drag-drop-content-types",
-	"version": "1.3.4",
+	"version": "1.3.5",
 	"description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
 	"strapi": {
 		"name": "drag-drop-content-types",

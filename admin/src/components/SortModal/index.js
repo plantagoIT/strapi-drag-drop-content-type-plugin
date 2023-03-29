@@ -207,6 +207,7 @@ const SortModal = () => {
 					<SimpleMenu
 						as={IconButton}
 						icon={<Layer />}
+						label="Sort via drag and drop"
 						onClick={() => {
 							fetchContentType();
 						}}

@@ -50,7 +50,11 @@ async function index(contentType, start, limit, locale, rankFieldName) {
     locale: locale,
   }
   indexData.sort[rankFieldName] = 'asc'
-  return await strapi.entityService.findMany(contentType, indexData );
+  try {
+    return await strapi.entityService.findMany(contentType, indexData );
+  } catch (err) {
+    return {};
+  }
 }
 
 // Update rank of specified content type
