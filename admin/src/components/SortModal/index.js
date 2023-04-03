@@ -77,7 +77,7 @@ const SortModal = () => {
 				if (
 					entries.data.length > 0 &&
 					!!toString(entries.data[0][settings.rank]) &&
-					!!entries.data[0][settings.title]
+					(!!entries.data[0][settings.title] || !!entries.data[0][settings.fallbackTitle] )
 				) {
 					setStatus("success");
 				}
@@ -171,8 +171,8 @@ const SortModal = () => {
 				>
 					<Icon height={"0.6em"} as={Drag} />
 					&nbsp;
-					<span title={value[settings.title]}>
-						{value[settings.title]}
+					<span title={value[settings.title] || value[settings.fallbackTitle]}>
+						{value[settings.title] || value[settings.fallbackTitle]}
 					</span>
 				</div>
 			</MenuItem>

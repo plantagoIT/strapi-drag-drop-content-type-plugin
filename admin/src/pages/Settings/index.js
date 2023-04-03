@@ -133,6 +133,33 @@ const Settings = () => {
                       } />
                   </Box>
                 </GridItem>
+                <GridItem col={6} s={12}>
+                  <Box padding={0}>
+                    <TextInput
+                      placeholder="Fallback Title"
+                      label="Fallback Title Field Name"
+                      hint="You must create a Short Text Field with the main title label or the fallback label in the Content-Type Builder"
+                      name="content"
+                      onChange={e => {
+                        setSettings({
+                          ...settings,
+                          fallbackTitle: e.target.value,
+                        })
+                      }}
+                      value={settings.fallbackTitle}
+                      labelAction={
+                        <Tooltip description="Fallback title Field that will show up in the drag drop menu">
+                          <button aria-label="Information about the email" style={{
+                            border: 'none',
+                            padding: 0,
+                            background: 'transparent'
+                          }}>
+                            <Information aria-hidden={true} />
+                          </button>
+                        </Tooltip>
+                      } />
+                  </Box>
+                </GridItem>
               </Grid>
             </Stack>
           </Box>

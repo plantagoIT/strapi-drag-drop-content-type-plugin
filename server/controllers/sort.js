@@ -16,6 +16,7 @@ async function createDefaultConfig() {
     body: {
       rank: 'rank',
       title: 'title',
+      fallbackTitle: 'name'
     }
   };
   await pluginStore.set({ key: 'settings', value });
