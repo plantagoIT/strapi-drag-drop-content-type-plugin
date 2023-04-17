@@ -31,10 +31,12 @@ module.exports = {
 
 ### In the app
 Go to `Settings` -> `Drag Drop Content Type` -> `Configuration`:
-* Specify how the rank field and the corresponding title field are called in your content types. Default value are `rank` and `title`.
-* Add the specified fields to your content type. With the default values this would be `title` (Text (Type: Short Text)) and `rank` (Number (Number format: integer)) 
-* You will be rewared with the drag-dropable menu in the list view of all content types having the specified fields.
-* (Recommendation: Add "Default sort attribute" `rank`, "Default sort order" `ASC` and remove the `rank` attribute from the view using "Configure the view" button.)
+* Specify how the rank field is called in your content-types. Default value is `rank`.
+* Add the `rank` fields to your content type. With the default value this would be `rank` (Number (Number format: integer)).
+
+#### Hints
+* Add "Default sort attribute" `rank`, "Default sort order" `ASC` and remove the `rank` attribute from the view using "Configure the view" button.
+* You can also set a `title` value that is displayed in the menu instead of the default.
 
 ### In your frontend
 Assuming you go with the default settings, you can make a request on the following url to get the ordered items:
