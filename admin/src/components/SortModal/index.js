@@ -187,8 +187,8 @@ const SortModal = () => {
 				>
 					<Icon height={"0.6em"} as={Drag} />
 					&nbsp;
-					<span title={value[settings.title]}>
-						{value[settings.title]}
+					<span title={value[settings.title] ? value[settings.title] : value[mainField] }>
+						{value[settings.title] ? value[settings.title] : value[mainField] }
 					</span>
 				</div>
 			</MenuItem>
