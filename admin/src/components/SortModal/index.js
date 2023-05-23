@@ -112,7 +112,7 @@ const SortModal = () => {
 			setStatus("success");
 			setData(entries.data);
 			// TODO: remove this line and get pagination from elsewhere
-			const { data } = await axiosInstance.get(`/content-manager/collection-types/${contentTypePath}?sort=rank:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`);
+			const { data } = await axiosInstance.get(`/content-manager/collection-types/${contentTypePath}?sort=${settings.rank}:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`);
 			setPagination(data.pagination);
 		} catch (e) {
 			console.log(e);
@@ -192,8 +192,8 @@ const SortModal = () => {
 				>
 					<Icon height={"0.6em"} as={Drag} />
 					&nbsp;
-					<span title={value[settings.title]}>
-						{value[settings.title]}
+					<span title={value[settings.title] ? value[settings.title] : value[mainField] }>
+						{value[settings.title] ? value[settings.title] : value[mainField] }
 					</span>
 				</div>
 			</MenuItem>
@@ -229,6 +229,7 @@ const SortModal = () => {
 					<SimpleMenu
 						as={IconButton}
 						icon={<Layer />}
+						label="Sort via drag and drop"
 						onClick={() => {
 							fetchContentType();
 						}}
