@@ -6,7 +6,7 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
 import { useQueryParams } from "../../utils/useQueryParams";
 import { Button, Divider } from '@strapi/design-system';
-import { SimpleMenu, MenuItem } from "@strapi/design-system/SimpleMenu";
+import { SimpleMenu, MenuItem } from '@strapi/design-system/v2';
 import { IconButton } from "@strapi/design-system/IconButton";
 import { Icon } from "@strapi/design-system/Icon";
 import Drag from "@strapi/icons/Drag";
