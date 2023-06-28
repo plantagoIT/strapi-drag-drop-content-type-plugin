@@ -224,7 +224,7 @@ const SortModal = () => {
 						as={IconButton}
 						icon={<Layer />}
 						label="Sort via drag and drop"
-						onClick={() => {
+						onOpen={() => {
 							fetchContentType();
 						}}
 					>
