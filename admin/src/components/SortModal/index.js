@@ -177,7 +177,8 @@ const SortModal = () => {
 	const showMenu = () => {
 
 		const SortableItem = SortableElement(({ value }) => (
-			<MenuItem style={{ zIndex: 10, cursor: "all-scroll" }}>
+			<MenuItem style={{ zIndex: 10, cursor: "all-scroll", userSelect: "none" }}
+				onSelect={(e) => { e.preventDefault() }}>
 				<div
 					style={{
 						overflowX: "hidden",
@@ -187,8 +188,8 @@ const SortModal = () => {
 				>
 					<Icon height={"0.6em"} as={Drag} />
 					&nbsp;
-					<span title={value[settings.title] ? value[settings.title] : value[mainField] }>
-						{value[settings.title] ? value[settings.title] : value[mainField] }
+					<span title={value[settings.title] ? value[settings.title] : value[mainField]}>
+						{value[settings.title] ? value[settings.title] : value[mainField]}
 					</span>
 				</div>
 			</MenuItem>
@@ -224,7 +225,7 @@ const SortModal = () => {
 						as={IconButton}
 						icon={<Layer />}
 						label="Sort via drag and drop"
-						onClick={() => {
+						onOpen={() => {
 							fetchContentType();
 						}}
 					>
@@ -253,7 +254,7 @@ const SortModal = () => {
 
 	// Update menu when loading more elements
 	useEffect(() => {
-		if (settings){
+		if (settings) {
 			fetchContentType();
 		}
 	}, [noEntriesFromNextPage])
