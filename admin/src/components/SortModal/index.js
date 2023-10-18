@@ -222,9 +222,10 @@ const SortModal = () => {
 			status == 'success' ?
 				<>
 					<SimpleMenu
-						as={IconButton}
-						icon={<Layer />}
-						label="Sort via drag and drop"
+						label="Sort"
+						//as={IconButton}
+						//icon={<Layer />}
+						//aria-label="Sort via drag and drop"
 						onOpen={() => {
 							fetchContentType();
 						}}
