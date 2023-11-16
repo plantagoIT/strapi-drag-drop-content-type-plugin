@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getData, getDataSucceeded } from "@strapi/admin/admin/src/content-manager/pages/ListView/actions";
+import { getData, getDataSucceeded } from "../../utils/strapi";
 import axiosInstance from "../../utils/axiosInstance";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
