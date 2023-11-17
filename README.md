@@ -37,6 +37,9 @@ Go to `Settings` -> `Drag Drop Content Type` -> `Configuration`:
 #### Hints
 * Add "Default sort attribute" `rank`, "Default sort order" `ASC` and remove the `rank` attribute from the view using "Configure the view" button.
 * You can also set a `title` value that is displayed in the menu instead of the default.
+* If you want a second field to be displayed in the drag and drop menu, you can add s `subtitle` in the settings. The subtitle should either be:
+- A field containing a string or number or something like that.
+- It can be an object (like a relation), but it must have the `title` field specified in the settings (it won't recognize automatically!).
 
 ### In your frontend
 Assuming you go with the default settings, you can make a request on the following url to get the ordered items:
