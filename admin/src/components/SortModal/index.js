@@ -124,17 +124,22 @@ const SortModal = () => {
 
 	// Get subtitle from entry if defined in settings
 	const getSubtitle = (entry) => {
-		if (settings.subtitle && entry[settings.subtitle]) {
-			if (entry[settings.subtitle].constructor.name == "Array") {
-				if (entry[settings.subtitle].length > 0)
-					return `- ${entry[settings.subtitle][0][settings.title]}`;
-			} else if (typeof entry[settings.subtitle] === "object") {
-				return `- ${entry[settings.subtitle][settings.title]}`;
-			} else {
-				return `- ${entry[settings.subtitle]}`;
+		try {
+			if (settings.subtitle && entry[settings.subtitle]) {
+				if (entry[settings.subtitle].constructor.name == "Array") {
+					if (entry[settings.subtitle].length > 0)
+						return `- ${entry[settings.subtitle][0][settings.title]}`;
+				} else if (typeof entry[settings.subtitle] === "object") {
+					return `- ${entry[settings.subtitle][settings.title]}`;
+				} else {
+					return `- ${entry[settings.subtitle]}`;
+				}
 			}
+			return "";
+		} catch (e) {
+			console.log("Unsupported subtitle field value.", e);
+			return "";
 		}
-		return "";
 	}
 
 	// Update all ranks via put request.
