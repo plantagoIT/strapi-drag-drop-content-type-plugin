@@ -5,6 +5,8 @@
 
 ![dragdropcrop](https://user-images.githubusercontent.com/37687705/212884821-356ec68c-b71a-4b89-9e99-8a625f84cfbe.gif)
 
+## 🐞
+Due to changes in the Strapi core, the plugin causes a full page reload after sorting. This is a known issue, and will be fixed ASAP if possible.
 
 ## ⏳ Installation
 
