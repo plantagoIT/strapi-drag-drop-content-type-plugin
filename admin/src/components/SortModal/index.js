@@ -177,7 +177,7 @@ const SortModal = () => {
 	// Actions to perform after sorting is successful
 	const afterUpdate = (pagination, newData) => {
 		// TODO: remove this 
-		//history.go(0);
+		history.go(0);
 
 		// TODO: reenable this
 		// Avoid full page reload and only re-render table.
