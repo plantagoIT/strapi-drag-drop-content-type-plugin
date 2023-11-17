@@ -79,7 +79,6 @@ async function update(id, contentType, rank, rankFieldName) {
 async function batchUpdate(updates, contentType) {
   const config = await getSettings();
   const sortFieldName = config.body.rank;
-  console.log('sortFieldName: ', sortFieldName);
   const results = [];
 
   for (const update of updates) {

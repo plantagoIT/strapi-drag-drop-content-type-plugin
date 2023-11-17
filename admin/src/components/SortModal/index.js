@@ -75,7 +75,6 @@ const SortModal = () => {
 
 	// Fetch page entries from the sort controller
 	const getPageEntries = async () => {
-		console.log("PAGIN", currentPage == 1, noEntriesFromNextPage, pageSize, pageSize + noEntriesFromNextPage, pageSize + 2 * noEntriesFromNextPage,)
 		return await axiosInstance.post(
 			`/drag-drop-content-types/sort-index`,
 			{
@@ -178,7 +177,7 @@ const SortModal = () => {
 	// Actions to perform after sorting is successful
 	const afterUpdate = (pagination, newData) => {
 		// TODO: remove this 
-		history.go(0);
+		//history.go(0);
 
 		// TODO: reenable this
 		// Avoid full page reload and only re-render table.
@@ -210,7 +209,6 @@ const SortModal = () => {
 		));
 
 		const SortableList = SortableContainer(({ items }) => {
-			console.log(noEntriesFromNextPage, listIncrementSize, data.length);
 			return (
 				<div style={{ maxWidth: "280px" }}>
 					<ul>
