@@ -5,9 +5,6 @@
 
 ![dragdropcrop](https://user-images.githubusercontent.com/37687705/212884821-356ec68c-b71a-4b89-9e99-8a625f84cfbe.gif)
 
-## 🐞 Known issues
-Due to changes in the Strapi core, the plugin causes a full page reload after sorting. This is a known issue, and will be fixed ASAP if possible.
-
 ## ⏳ Installation
 
 ```bash
@@ -49,6 +46,9 @@ Assuming you go with the default settings, you can make a request on the followi
 ```
 http://localhost:1337/api/foo?sort=rank:asc
 ```
+
+## 🐞 Known issues
+Due to changes in the Strapi core, the plugin causes a full page reload after sorting. This is a known issue, and will be fixed ASAP if possible.
 
 ## 🤝 Contribute
 Feel free to fork and make pull requests to this plugin. All input is welcome - thanks for all contributions so far!
