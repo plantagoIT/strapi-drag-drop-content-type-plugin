@@ -128,11 +128,11 @@ const SortModal = () => {
 			if (settings.subtitle && entry[settings.subtitle]) {
 				if (entry[settings.subtitle].constructor.name == "Array") {
 					if (entry[settings.subtitle].length > 0)
-						return `- ${entry[settings.subtitle][0][settings.title]}`;
+						return ` - ${entry[settings.subtitle][0][settings.title]}`;
 				} else if (typeof entry[settings.subtitle] === "object") {
-					return `- ${entry[settings.subtitle][settings.title]}`;
+					return ` - ${entry[settings.subtitle][settings.title]}`;
 				} else {
-					return `- ${entry[settings.subtitle]}`;
+					return ` - ${entry[settings.subtitle]}`;
 				}
 			}
 			return "";
