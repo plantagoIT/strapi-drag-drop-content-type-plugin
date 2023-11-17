@@ -47,3 +47,7 @@ http://localhost:1337/api/foo?sort=rank:asc
 
 ## 🤝 Contribute
 Feel free to fork and make pull requests to this plugin. All input is welcome - thanks for all contributions so far!
+
+
+## ⭐️ Support
+I you like this project, please give it a star. Maybe this will help it getting integrated to strapi's core some day 😊.
