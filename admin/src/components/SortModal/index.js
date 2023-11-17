@@ -11,6 +11,8 @@ import { IconButton } from "@strapi/design-system/IconButton";
 import { Icon } from "@strapi/design-system/Icon";
 import Drag from "@strapi/icons/Drag";
 import Layer from "@strapi/icons/Layer";
+import { useHistory } from "react-router-dom";
+
 
 const SortModal = () => {
 	const [data, setData] = useState([]);
@@ -166,11 +168,18 @@ const SortModal = () => {
 		}
 	};
 
+	// TODO: this is a hotfix caused by an update in strapi 4.15.2 that disabled direct imports.
+	const history = useHistory();
 	// Actions to perform after sorting is successful
 	const afterUpdate = (pagination, newData) => {
+		// TODO: remove this 
+		history.go(0);
+
+		// TODO: reenable this
 		// Avoid full page reload and only re-render table.
-		refetchEntries();
-		refetchEntriesSucceeded(pagination, newData);
+		//refetchEntries();
+		//refetchEntriesSucceeded(pagination, newData);
+
 	};
 
 	// Render the menu
