@@ -133,6 +133,33 @@ const Settings = () => {
                       } />
                   </Box>
                 </GridItem>
+                <GridItem col={6} s={12}>
+                  <Box padding={0}>
+                    <TextInput
+                      placeholder="Subtitle"
+                      label="Subitle Field Name"
+                      hint="Optionally select a second subtitle field to show up attached to the title in the drag drop menu. Leave blank to not show a subtitle."
+                      name="content"
+                      onChange={e => {
+                        setSettings({
+                          ...settings,
+                          subtitle: e.target.value,
+                        })
+                      }}
+                      value={settings.subtitle}
+                      labelAction={
+                        <Tooltip description="Field that will show up in the drag drop menu attached to title">
+                          <button aria-label="Information about the email" style={{
+                            border: 'none',
+                            padding: 0,
+                            background: 'transparent'
+                          }}>
+                            <Information aria-hidden={true} />
+                          </button>
+                        </Tooltip>
+                      } />
+                  </Box>
+                </GridItem>
               </Grid>
             </Stack>
           </Box>

@@ -19,6 +19,7 @@ async function createDefaultConfig() {
     body: {
       rank: 'rank',
       title: '',
+      subtitle: '',
     }
 
   };

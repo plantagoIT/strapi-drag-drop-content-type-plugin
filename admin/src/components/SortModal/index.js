@@ -65,7 +65,8 @@ const SortModal = () => {
 			);
 			let fetchedSettings = {
 				rank: data.body.rank,
-				title: data.body.title.length > 0 ? data.body.title : mainField
+				title: data.body.title.length > 0 ? data.body.title : mainField,
+				subtitle: data.body.subtitle.length > 0 ? data.body.subtitle : null
 			}
 			setSettings(fetchedSettings);
 		} catch (e) {
@@ -120,6 +121,21 @@ const SortModal = () => {
 			setStatus("error");
 		}
 	};
+
+	// Get subtitle from entry if defined in settings
+	const getSubtitle = (entry) => {
+		if (settings.subtitle && entry[settings.subtitle]) {
+			if (entry[settings.subtitle].constructor.name == "Array") {
+				if (entry[settings.subtitle].length > 0)
+					return `- ${entry[settings.subtitle][0][settings.title]}`;
+			} else if (typeof entry[settings.subtitle] === "object") {
+				return `- ${entry[settings.subtitle][settings.title]}`;
+			} else {
+				return `- ${entry[settings.subtitle]}`;
+			}
+		}
+		return "";
+	}
 
 	// Update all ranks via put request.
 	const updateContentType = async ({ oldIndex, newIndex }) => {
@@ -203,6 +219,7 @@ const SortModal = () => {
 					&nbsp;
 					<span title={value[settings.title] ? value[settings.title] : value[mainField]}>
 						{value[settings.title] ? value[settings.title] : value[mainField]}
+						{getSubtitle(value)}
 					</span>
 				</div>
 			</MenuItem>
