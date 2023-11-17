@@ -73,6 +73,7 @@ const SortModal = () => {
 
 	// Fetch page entries from the sort controller
 	const getPageEntries = async () => {
+		console.log("PAGIN",currentPage == 1, noEntriesFromNextPage,  pageSize, pageSize + noEntriesFromNextPage,  pageSize + 2 * noEntriesFromNextPage, )
 		return await axiosInstance.post(
 			`/drag-drop-content-types/sort-index`,
 			{
@@ -124,6 +125,7 @@ const SortModal = () => {
 		try {
 			// Increase performance by breaking loop after last element having a rank change is updated
 			const sortedList = arrayMoveImmutable(data, oldIndex, newIndex);
+			const rankUpdates = [];
 			let rankHasChanged = false;
 			// Iterate over all results and append them to the list
 			for (let i = 0; i < sortedList.length; i++) {
@@ -131,20 +133,23 @@ const SortModal = () => {
 				if (sortedList[i].id != data[i].id) {
 					const newRank =
 						parseInt(pageSize * (currentPage - 1) + i) || 0;
-					// Update rank via put request
-					await axiosInstance.put(
-						`/drag-drop-content-types/sort-update/${sortedList[i].id}`,
-						{
-							contentType: contentTypePath,
-							rankFieldName: settings.rank,
-							rank: newRank,
-						}
-					);
+					const update = {
+						id: sortedList[i].id,
+						rank: newRank,
+					};
+					rankUpdates.push(update);
 					rankHasChanged = true;
 				} else if (rankHasChanged) {
 					break;
 				}
 			}
+
+			// Batch Update DB with new ranks
+			await axiosInstance.put("/drag-drop-content-types/batch-update", {
+				contentType: contentTypePath,
+				updates: rankUpdates,
+			});
+
 			// distinguish last page from full/first page
 			let sortedListViewEntries =
 				currentPage == 1
@@ -195,6 +200,7 @@ const SortModal = () => {
 		));
 
 		const SortableList = SortableContainer(({ items }) => {
+			console.log(noEntriesFromNextPage , listIncrementSize, data.length);
 			return (
 				<div style={{ maxWidth: "280px" }}>
 					<ul>

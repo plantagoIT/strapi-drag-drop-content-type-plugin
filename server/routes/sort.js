@@ -1,5 +1,3 @@
-
-
 module.exports = {
   type: 'admin',
   routes: [
@@ -22,18 +20,27 @@ module.exports = {
       },
     },
     {
-      method: "POST",
-      path: "/sort-index",
-      handler: "sort.index",
+      method: 'POST',
+      path: '/sort-index',
+      handler: 'sort.index',
       config: {
         policies: [],
         auth: false,
       },
     },
     {
-      method: "PUT",
-      path: "/sort-update/:id",
-      handler: "sort.update",
+      method: 'PUT',
+      path: '/batch-update',
+      handler: 'sort.batchUpdate',
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+    {
+      method: 'PUT',
+      path: '/sort-update/:id',
+      handler: 'sort.update',
       config: {
         policies: [],
         auth: false,
