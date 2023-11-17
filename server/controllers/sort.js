@@ -1,4 +1,7 @@
+// @ts-check
 'use strict';
+
+const { z } = require('zod');
 
 // Get the store from the drag-drop plugin
 function getPluginStore() {
@@ -17,6 +20,7 @@ async function createDefaultConfig() {
       rank: 'rank',
       title: '',
     }
+
   };
   await pluginStore.set({ key: 'settings', value });
   return pluginStore.get({ key: 'settings' });
@@ -43,7 +47,7 @@ async function setSettings(settings) {
 // Search for entries ordered by rank
 async function index(contentType, start, limit, locale, rankFieldName) {
   let indexData = {
-    sort: { },
+    sort: {},
     populate: '*',
     start: start,
     limit: limit,
@@ -51,7 +55,7 @@ async function index(contentType, start, limit, locale, rankFieldName) {
   }
   indexData.sort[rankFieldName] = 'asc'
   try {
-    return await strapi.entityService.findMany(contentType, indexData );
+    return await strapi.entityService.findMany(contentType, indexData);
   } catch (err) {
     return {};
   }
@@ -65,6 +69,41 @@ async function update(id, contentType, rank, rankFieldName) {
   }
   updateData.data[rankFieldName] = rank;
   return await strapi.query(contentType).update(updateData);
+}
+
+/**
+ *
+ * @param {RankUpdate[]} updates
+ * @param {string} contentType
+ */
+async function batchUpdate(updates, contentType) {
+  const config = await getSettings();
+  const sortFieldName = config.body.rank;
+  console.log('sortFieldName: ', sortFieldName);
+  const results = [];
+
+  for (const update of updates) {
+    // update entry's rank in db
+    try {
+      const updatedEntry = await strapi.db.query(contentType).update({
+        where: { id: update.id },
+        data: {
+          [sortFieldName]: update.rank,
+        },
+      });
+      updatedEntry?.id && results.push(updatedEntry);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  if (results?.length !== updates?.length) {
+    throw new Error('Error updating rank entries.');
+  } else {
+    return results.map((entry) => ({
+      id: entry.id,
+      rank: entry[sortFieldName],
+    }));
+  }
 }
 
 module.exports = {
@@ -98,4 +137,33 @@ module.exports = {
       ctx.throw(500, err);
     }
   },
+  async batchUpdate(ctx) {
+    try {
+      const payload = await BatchUpdateRequestSchema.parseAsync(
+        ctx.request.body
+      );
+      try {
+        ctx.body = await batchUpdate(payload.updates, payload.contentType);
+      } catch (err) {
+        ctx.throw(500, err);
+      }
+    } catch (err) {
+      ctx.throw(400, err);
+    }
+  },
 };
+
+// TYPE-SAFETY AND VALIDATION
+
+// Request schema used for parsing/validating incoming API requests. Uses Zod which works well with Typescript if used in the future.
+const RankUpdateSchema = z.object({
+  id: z.number(),
+  rank: z.number(),
+});
+const BatchUpdateRequestSchema = z.object({
+  contentType: z.string(),
+  updates: z.array(RankUpdateSchema),
+});
+
+// Try to enforce Typescript types in Javascript using JSDoc
+/** @typedef { z.infer<typeof RankUpdateSchema> } RankUpdate */
