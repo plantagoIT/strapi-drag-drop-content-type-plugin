@@ -66,7 +66,7 @@ const SortModal = () => {
 			let fetchedSettings = {
 				rank: data.body.rank,
 				title: data.body.title.length > 0 ? data.body.title : mainField,
-				subtitle: data.body.subtitle.length > 0 ? data.body.subtitle : null
+				subtitle: data.body.subtitle?.length > 0 ? data.body.subtitle : null
 			}
 			setSettings(fetchedSettings);
 		} catch (e) {
@@ -79,12 +79,12 @@ const SortModal = () => {
 		return await axiosInstance.post(
 			`/drag-drop-content-types/sort-index`,
 			{
-				contentType: contentTypePath,
-				rankFieldName: settings.rank,
-				start: Math.max(0, (currentPage - 1) * pageSize - noEntriesFromNextPage),
-				limit: currentPage == 1 ? pageSize + noEntriesFromNextPage : pageSize + 2 * noEntriesFromNextPage,
-				locale: locale,
-			}
+			contentType: contentTypePath,
+			rankFieldName: settings.rank,
+			start: Math.max(0, (currentPage - 1) * pageSize - noEntriesFromNextPage),
+			limit: currentPage == 1 ? pageSize + noEntriesFromNextPage : pageSize + 2 * noEntriesFromNextPage,
+			locale: locale,
+		}
 		);
 	}
 
@@ -179,9 +179,9 @@ const SortModal = () => {
 					sortedList.slice(0, pageSize)
 					:
 					sortedList.length < pageSize
-						?
+					?
 						sortedList.slice(noEntriesFromNextPage, sortedList.length)
-						:
+					:
 						sortedList.slice(noEntriesFromNextPage, pageSize + noEntriesFromNextPage)
 			// set new sorted data (refresh UI list component)
 			setData(sortedList);
@@ -197,7 +197,7 @@ const SortModal = () => {
 	const history = useHistory();
 	// Actions to perform after sorting is successful
 	const afterUpdate = (pagination, newData) => {
-		// TODO: remove this 
+		// TODO: remove this
 		history.go(0);
 
 		// TODO: reenable this
@@ -268,9 +268,9 @@ const SortModal = () => {
 						<SortableList items={data} onSortEnd={updateContentType} />
 					</SimpleMenu>
 				</>
-				:
+			:
 				<></>
-		);
+					);
 	};
 
 	// Fetch content-type on page render
