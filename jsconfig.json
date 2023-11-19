@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "CommonJS",
+    "target": "es2021",
+    "jsx": "react-jsx",
+    "checkJs": true
+  },
+  "include": [
+    "admin/src/**/*.js",
+    "admin/src/**/*.d.js",
+    "admin/src/**/*.jsx",
+    "admin/src/**/*.ts",
+    "admin/src/**/*.d.ts",
+    "admin/src/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
+}

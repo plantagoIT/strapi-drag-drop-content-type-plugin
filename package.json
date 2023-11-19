@@ -1,52 +1,62 @@
 {
-	"name": "@retikolo/drag-drop-content-types",
-	"version": "1.4.1",
-	"description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
-	"strapi": {
-		"name": "drag-drop-content-types",
-		"description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
-		"kind": "plugin",
-		"displayName": "Drag Drop Content Types"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
-	},
-	"peerDependencies": {
-		"@strapi/strapi": "^4.0.0"
-	},
-	"dependencies": {
-		"array-move": "^4.0.0",
-		"react-sortable-hoc": "^2.0.0",
-		"zod": "^3.20.2"
-	},
-	"author": {
-		"name": "Aeneas Meier",
-		"email": "aeneas@retikolo.xyz",
-		"url": "https://rgb.retikolo.xyz"
-	},
-	"maintainers": [
-		{
-			"name": "Aeneas Meier",
-			"email": "aeneas@retikolo.xyz",
-			"url": "https://rgb.retikolo.xyz"
-		}
-	],
-	"keywords": [
-		"strapi",
-		"plugin",
-		"strapi-plugin",
-		"drag",
-		"drop",
-		"drag and drop",
-		"drag drop content types",
-		"content types",
-		"sort",
-		"order"
-	],
-	"engines": {
-		"node": ">=14.19.1",
-		"npm": ">=6.0.0"
-	},
-	"license": "MIT"
+  "name": "@retikolo/drag-drop-content-types",
+  "version": "1.4.2",
+  "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
+  "keywords": [
+    "strapi",
+    "plugin",
+    "strapi-plugin",
+    "drag",
+    "drop",
+    "drag and drop",
+    "drag drop content types",
+    "content types",
+    "sort",
+    "order"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Aeneas Meier",
+    "email": "aeneas@retikolo.xyz",
+    "url": "https://rgb.retikolo.xyz"
+  },
+  "maintainers": [
+    {
+      "name": "Aeneas Meier",
+      "email": "aeneas@retikolo.xyz",
+      "url": "https://rgb.retikolo.xyz"
+    }
+  ],
+  "dependencies": {
+    "array-move": "^4.0.0",
+    "react-sortable-hoc": "^2.0.0",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.54.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdoc-tsimport-plugin": "^1.0.5"
+  },
+  "peerDependencies": {
+    "@strapi/design-system": "^1.13.1",
+    "@strapi/icons": "1.13.1",
+    "@strapi/strapi": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=14.19.1",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "name": "drag-drop-content-types",
+    "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
+    "kind": "plugin",
+    "displayName": "Drag Drop Content Types"
+  }
 }
