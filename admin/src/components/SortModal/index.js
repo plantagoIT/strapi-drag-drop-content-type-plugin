@@ -46,7 +46,6 @@ const SortModal = () => {
   // Use strapi hook to reorder list after drag and drop
   const refetchEntriesSucceeded = React.useCallback(
     (pagination, newData) => {
-      console.log('pagination in refetchEntriesSucceeded: ', pagination);
       dispatch(getDataSucceeded(pagination, newData));
     },
     [dispatch, pagination, data]
@@ -139,7 +138,6 @@ const SortModal = () => {
         const { data } = await axiosInstance.get(
           `/content-manager/collection-types/${contentTypePath}?sort=${settings.rank}:asc&page=${currentPage}&pageSize=${pageSize}&locale=${locale}`
         );
-        console.log('pagination: ', data?.pagination);
         setPagination(data.pagination);
       }
     } catch (e) {
