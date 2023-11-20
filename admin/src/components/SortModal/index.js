@@ -78,7 +78,6 @@ const SortModal = () => {
         title: data.body.title?.length > 0 ? data.body.title : mainField,
         subtitle: data.body.subtitle?.length > 0 ? data.body.subtitle : null,
       };
-      console.log('fetchedSettings: ', fetchedSettings);
       setSettings(fetchedSettings);
     } catch (e) {
       console.log(e);
