@@ -88,7 +88,7 @@ const SortModal = () => {
 
   // Fetch page entries from the sort controller
   const getPageEntries = async () => {
-    if (locale && pageSize) {
+    if (pageSize) {
       const results = await axiosInstance.post(
         `/drag-drop-content-types/sort-index`,
         {
@@ -123,7 +123,7 @@ const SortModal = () => {
         }
       }
     } catch (e) {
-      console.log(e);
+      console.log('Could not initialize content type', e);
       setStatus('error');
     }
   };
@@ -143,7 +143,7 @@ const SortModal = () => {
         setPagination(data.pagination);
       }
     } catch (e) {
-      console.log(e);
+      console.log('Could not fetch content type', e);
       setStatus('error');
     }
   };
@@ -192,7 +192,7 @@ const SortModal = () => {
       setStatus('success');
       afterUpdate(pagination, sortedListViewEntries);
     } catch (e) {
-      console.log(e);
+      console.log('Could not update content type:', e);
       setStatus('error');
     }
   };
@@ -229,7 +229,7 @@ const SortModal = () => {
 
   // Update menu when loading more elements
   useEffect(() => {
-    if (settings?.rank && locale && pageSize && currentPage) {
+    if (settings?.rank && pageSize && currentPage) {
       fetchContentType();
     }
   }, [noEntriesFromNextPage, locale, pageSize, currentPage, settings]);
