@@ -9,10 +9,10 @@ export function getData(uid, params) {
   };
 }
 
-export function getDataSucceeded(count, data) {
+export function getDataSucceeded(pagination, data) {
   return {
     type: GET_DATA_SUCCEEDED,
-    count,
+    pagination,
     data,
   };
 }

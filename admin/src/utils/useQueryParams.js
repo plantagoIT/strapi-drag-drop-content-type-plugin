@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from 'react';
 
+/**
+ *
+ * @returns {Object} | {}}
+ */
 export function useQueryParams() {
-	const [queryParams, setQueryParams] = useState({});
+  const [params, setParams] = useState({});
 
-	useEffect(() => {
-		const queryParams = new Proxy(
-			new URLSearchParams(window.location.search),
-			{
-				get: (searchParams, prop) => searchParams.get(prop),
-			}
-		);
-		setQueryParams(queryParams);
-		return () => {
-			queryParams;
-		};
-	}, [window.location.search]);
+  useEffect(() => {
+    const q = new Proxy(new URLSearchParams(window.location.search), {
+      get: (queryParams, prop) => queryParams.get(prop.toString()),
+    });
+    setParams(q);
+  }, [window.location.search]);
 
-	return [queryParams];
+  return { queryParams: params };
 }
