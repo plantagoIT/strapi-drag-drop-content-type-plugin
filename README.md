@@ -32,6 +32,7 @@ module.exports = {
 Go to `Settings` -> `Drag Drop Content Type` -> `Configuration`:
 * Specify how the rank field is called in your content-types. Default value is `rank`.
 * Add the `rank` fields to your content type. With the default value this would be `rank` (Number (Number format: integer)).
+* (Give permissions for the `rank` field to roles such as "Editor" if needed).
 
 #### Hints
 * Add "Default sort attribute" `rank`, "Default sort order" `ASC` and remove the `rank` attribute from the view using "Configure the view" button.
