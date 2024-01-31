@@ -3,19 +3,8 @@ import React, { useEffect, useState } from 'react';
 import sortRequests from '../../api/sort';
 
 import { LoadingIndicatorPage, useNotification } from '@strapi/helper-plugin';
-
-import { Box } from '@strapi/design-system/Box';
-import { Stack } from '@strapi/design-system/Stack';
-import { Button } from '@strapi/design-system/Button';
-import { Grid, GridItem } from '@strapi/design-system/Grid';
-import { HeaderLayout } from '@strapi/design-system/Layout';
-import { ContentLayout } from '@strapi/design-system/Layout';
-import { Typography } from '@strapi/design-system/Typography';
-import { TextInput } from '@strapi/design-system/TextInput';
-import { Tooltip } from '@strapi/design-system/Tooltip';
-
-import Information from '@strapi/icons/Information';
-import Check from '@strapi/icons/Check';
+import { Box, Stack, Button, Grid, GridItem, HeaderLayout, ContentLayout, Typography, TextInput, Tooltip } from '@strapi/design-system';
+import { Information, Check } from '@strapi/icons';
 
 const Settings = () => {
   const [settings, setSettings] = useState({});
