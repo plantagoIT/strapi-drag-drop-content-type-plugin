@@ -77,6 +77,7 @@ const SortModal = () => {
         rank: data.body.rank,
         title: data.body.title?.length > 0 ? data.body.title : mainField,
         subtitle: data.body.subtitle?.length > 0 ? data.body.subtitle : null,
+        mainField,
       };
       setSettings(fetchedSettings);
     } catch (e) {
@@ -212,10 +213,10 @@ const SortModal = () => {
     fetchContentTypeConfig();
   }, []);
 
-  // Fetch settings on page render
+  // Fetch settings when mainField changes
   useEffect(() => {
     fetchSettings();
-  }, []);
+  }, [mainField]);
 
   // Update view when settings change
   useEffect(() => {
