@@ -84,17 +84,13 @@ async function batchUpdate(updates, contentType) {
 
   for (const update of updates) {
     // update entry's rank in db
-    try {
-      const updatedEntry = await strapi.db.query(contentType).update({
-        where: { id: update.id },
-        data: {
-          [sortFieldName]: update.rank,
-        },
-      });
-      updatedEntry?.id && results.push(updatedEntry);
-    } catch (err) {
-      console.log(err);
-    }
+    const updatedEntry = await strapi.db.query(contentType).update({
+      where: { id: update.id },
+      data: {
+        [sortFieldName]: update.rank,
+      },
+    });
+    updatedEntry?.id && results.push(updatedEntry);
   }
   if (results?.length !== updates?.length) {
     throw new Error('Error updating rank entries.');
