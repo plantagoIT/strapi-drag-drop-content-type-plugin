@@ -2,7 +2,7 @@ import { arrayMoveImmutable } from 'array-move';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
-import { useNotification, useAPIErrorHandler, CheckPagePermissions } from '@strapi/helper-plugin';
+import { useNotification, useAPIErrorHandler, CheckPermissions } from '@strapi/helper-plugin';
 import axiosInstance from '../../utils/axiosInstance';
 import { getData, getDataSucceeded } from '../../utils/strapi';
 import { useQueryParams } from '../../utils/useQueryParams';
@@ -253,7 +253,7 @@ const SortModal = () => {
   // }, [params?.page, params?.pageSize]);
 
   return (
-    <CheckPagePermissions permissions={pluginPermissions.main}>
+    <CheckPermissions permissions={pluginPermissions.main}>
       <SortMenu
         items={data}
         status={status}
@@ -263,7 +263,7 @@ const SortModal = () => {
         hasMore={hasMore}
         settings={settings}
       />
-    </CheckPagePermissions>
+    </CheckPermissions>
   );
 };
 
