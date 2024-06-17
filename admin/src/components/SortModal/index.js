@@ -2,6 +2,7 @@ import { arrayMoveImmutable } from 'array-move';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
+import { useNotification, useAPIErrorHandler } from '@strapi/helper-plugin';
 import axiosInstance from '../../utils/axiosInstance';
 import { getData, getDataSucceeded } from '../../utils/strapi';
 import { useQueryParams } from '../../utils/useQueryParams';
@@ -23,6 +24,9 @@ const SortModal = () => {
 
   const { queryParams: params } = useQueryParams();
   const dispatch = useDispatch();
+
+  const toggleNotification = useNotification();
+  const { formatAPIError } = useAPIErrorHandler();
 
   // Get content type from url
   const paths = window.location.pathname.split('/');
@@ -191,6 +195,10 @@ const SortModal = () => {
       afterUpdate(pagination, sortedListViewEntries);
     } catch (e) {
       console.log('Could not update content type:', e);
+      toggleNotification({
+        type: 'warning',
+        message: formatAPIError(e)
+      });
       setStatus('error');
     }
   };
