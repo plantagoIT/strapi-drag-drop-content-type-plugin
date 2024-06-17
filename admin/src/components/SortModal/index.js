@@ -2,11 +2,12 @@ import { arrayMoveImmutable } from 'array-move';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
-import { useNotification, useAPIErrorHandler } from '@strapi/helper-plugin';
+import { useNotification, useAPIErrorHandler, CheckPagePermissions } from '@strapi/helper-plugin';
 import axiosInstance from '../../utils/axiosInstance';
 import { getData, getDataSucceeded } from '../../utils/strapi';
 import { useQueryParams } from '../../utils/useQueryParams';
 import SortMenu from './SortMenu';
+import pluginPermissions from '../../permissions';
 
 const SortModal = () => {
   const [data, setData] = useState([]);
@@ -184,8 +185,8 @@ const SortModal = () => {
         currentPage == 1
           ? sortedList.slice(0, pageSize)
           : sortedList.length < pageSize
-          ? sortedList.slice(noEntriesFromNextPage, sortedList.length)
-          : sortedList.slice(
+            ? sortedList.slice(noEntriesFromNextPage, sortedList.length)
+            : sortedList.slice(
               noEntriesFromNextPage,
               pageSize + noEntriesFromNextPage
             );
@@ -252,15 +253,17 @@ const SortModal = () => {
   // }, [params?.page, params?.pageSize]);
 
   return (
-    <SortMenu
-      items={data}
-      status={status}
-      onOpen={fetchContentType}
-      onSortEnd={updateContentType}
-      onShowMore={showMoreHandler}
-      hasMore={hasMore}
-      settings={settings}
-    />
+    <CheckPagePermissions permissions={pluginPermissions.main}>
+      <SortMenu
+        items={data}
+        status={status}
+        onOpen={fetchContentType}
+        onSortEnd={updateContentType}
+        onShowMore={showMoreHandler}
+        hasMore={hasMore}
+        settings={settings}
+      />
+    </CheckPagePermissions>
   );
 };
 

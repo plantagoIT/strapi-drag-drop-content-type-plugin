@@ -3,6 +3,7 @@ import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
 import Initializer from './components/Initializer';
 import SortModal from './components/SortModal';
+import pluginPermissions from './permissions';
 
 
 const name = pluginPkg.strapi.name;
@@ -16,6 +17,7 @@ export default {
           id: `${pluginId}.plugin.name`,
           defaultMessage: 'Drag Drop Content Types',
         },
+        permissions: pluginPermissions.main,
       },
       [
         {

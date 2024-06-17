@@ -1,5 +1,14 @@
 'use strict';
 
-module.exports = ({ strapi }) => {
-  console.log("REGISTERED DRAG AND DROP CONTENT TYPE PLUGIN")
+module.exports = async ({ strapi }) => {
+  const actions = [
+    {
+      section: 'plugins',
+      displayName: 'Read',
+      uid: 'read',
+      pluginName: 'drag-drop-content-types',
+    },
+  ];
+
+  await strapi.admin.services.permission.actionProvider.registerMany(actions);
 };
