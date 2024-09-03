@@ -3,7 +3,19 @@ import React, { useEffect, useState } from 'react';
 import sortRequests from '../../api/sort';
 
 import { LoadingIndicatorPage, useNotification } from '@strapi/helper-plugin';
-import { Box, Stack, Button, Grid, GridItem, HeaderLayout, ContentLayout, Typography, TextInput, Tooltip } from '@strapi/design-system';
+import {
+  Box,
+  Stack,
+  Button,
+  Grid,
+  GridItem,
+  HeaderLayout,
+  ContentLayout,
+  Typography,
+  TextInput,
+  Tooltip,
+  ToggleInput,
+} from '@strapi/design-system';
 import { Information, Check } from '@strapi/icons';
 
 const Settings = () => {
@@ -13,7 +25,7 @@ const Settings = () => {
   const toggleNotification = useNotification();
 
   useEffect(() => {
-    sortRequests.getSettings().then(res => {
+    sortRequests.getSettings().then((res) => {
       setSettings(res.data.body);
       setIsLoading(false);
     });
@@ -75,24 +87,28 @@ const Settings = () => {
                       label="Rank Field Name"
                       hint="You must create a Number Field with this label and type integer in the Content-Type Builder"
                       name="content"
-                      onChange={e => {
+                      onChange={(e) => {
                         setSettings({
                           ...settings,
                           rank: e.target.value,
-                        })
+                        });
                       }}
                       value={settings.rank}
                       labelAction={
                         <Tooltip description="Field which is used for ordering content-type entries">
-                          <button aria-label="Information about the email" style={{
-                            border: 'none',
-                            padding: 0,
-                            background: 'transparent'
-                          }}>
+                          <button
+                            aria-label="Information about the email"
+                            style={{
+                              border: 'none',
+                              padding: 0,
+                              background: 'transparent',
+                            }}
+                          >
                             <Information aria-hidden={true} />
                           </button>
                         </Tooltip>
-                      } />
+                      }
+                    />
                   </Box>
                 </GridItem>
                 <GridItem col={6} s={12}>
@@ -102,24 +118,28 @@ const Settings = () => {
                       label="Title Field Name"
                       hint="Select or create a Short Text Field with this label in the Content-Type Builder. Leave blank to use content-type entry title"
                       name="content"
-                      onChange={e => {
+                      onChange={(e) => {
                         setSettings({
                           ...settings,
                           title: e.target.value,
-                        })
+                        });
                       }}
                       value={settings.title}
                       labelAction={
                         <Tooltip description="Field that will show up in the drag drop menu">
-                          <button aria-label="Information about the email" style={{
-                            border: 'none',
-                            padding: 0,
-                            background: 'transparent'
-                          }}>
+                          <button
+                            aria-label="Information about the email"
+                            style={{
+                              border: 'none',
+                              padding: 0,
+                              background: 'transparent',
+                            }}
+                          >
                             <Information aria-hidden={true} />
                           </button>
                         </Tooltip>
-                      } />
+                      }
+                    />
                   </Box>
                 </GridItem>
                 <GridItem col={6} s={12}>
@@ -129,24 +149,59 @@ const Settings = () => {
                       label="Subitle Field Name"
                       hint="Optionally select a second subtitle field to show up attached to the title in the drag drop menu. Leave blank to not show a subtitle."
                       name="content"
-                      onChange={e => {
+                      onChange={(e) => {
                         setSettings({
                           ...settings,
                           subtitle: e.target.value,
-                        })
+                        });
                       }}
                       value={settings.subtitle}
                       labelAction={
                         <Tooltip description="Field that will show up in the drag drop menu attached to title">
-                          <button aria-label="Information about the email" style={{
-                            border: 'none',
-                            padding: 0,
-                            background: 'transparent'
-                          }}>
+                          <button
+                            aria-label="Information about the email"
+                            style={{
+                              border: 'none',
+                              padding: 0,
+                              background: 'transparent',
+                            }}
+                          >
                             <Information aria-hidden={true} />
                           </button>
                         </Tooltip>
-                      } />
+                      }
+                    />
+                  </Box>
+                </GridItem>
+                <GridItem col={6} s={12}>
+                  <Box padding={0}>
+                    <ToggleInput
+                      label="Trigger Webhooks"
+                      hint="If enabled, the 'entry.update' webhook will be triggered when entries are reordered"
+                      onLabel="True"
+                      offLabel="False"
+                      checked={settings.triggerWebhooks}
+                      onChange={(e) => {
+                        setSettings({
+                          ...settings,
+                          triggerWebhooks: e.target.checked,
+                        });
+                      }}
+                      labelAction={
+                        <Tooltip description="Enable to trigger webhooks when entries are reordered">
+                          <button
+                            aria-label="Show tooltip"
+                            style={{
+                              border: 'none',
+                              padding: 0,
+                              background: 'transparent',
+                            }}
+                          >
+                            <Information aria-hidden={true} />
+                          </button>
+                        </Tooltip>
+                      }
+                    />
                   </Box>
                 </GridItem>
               </Grid>

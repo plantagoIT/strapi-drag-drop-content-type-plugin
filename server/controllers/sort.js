@@ -20,8 +20,8 @@ async function createDefaultConfig() {
       rank: 'rank',
       title: '',
       subtitle: '',
-    }
-
+      triggerWebhooks: false,
+    },
   };
   await pluginStore.set({ key: 'settings', value });
   return pluginStore.get({ key: 'settings' });
@@ -53,8 +53,8 @@ async function index(contentType, start, limit, locale, rankFieldName) {
     start: start,
     limit: limit,
     locale: locale,
-  }
-  indexData.sort[rankFieldName] = 'asc'
+  };
+  indexData.sort[rankFieldName] = 'asc';
   try {
     return await strapi.entityService.findMany(contentType, indexData);
   } catch (err) {
@@ -62,12 +62,15 @@ async function index(contentType, start, limit, locale, rankFieldName) {
   }
 }
 
-// Update rank of specified content type
+/**
+ * Update rank of specified content type
+ * @deprecated This function is not used in the current implementation. Can be removed.
+ */
 async function update(id, contentType, rank, rankFieldName) {
   let updateData = {
     where: { id: id },
-    data: {}
-  }
+    data: {},
+  };
   updateData.data[rankFieldName] = rank;
   return await strapi.query(contentType).update(updateData);
 }
@@ -80,6 +83,7 @@ async function update(id, contentType, rank, rankFieldName) {
 async function batchUpdate(updates, contentType) {
   const config = await getSettings();
   const sortFieldName = config.body.rank;
+  const shouldTriggerWebhooks = config.body.triggerWebhooks;
   const results = [];
 
   for (const update of updates) {
@@ -90,8 +94,26 @@ async function batchUpdate(updates, contentType) {
         [sortFieldName]: update.rank,
       },
     });
-    updatedEntry?.id && results.push(updatedEntry);
+
+    if (updatedEntry?.id) {
+      results.push(updatedEntry);
+
+      // Trigger webhook listener for updated entry
+      if (shouldTriggerWebhooks) {
+        await strapi.webhookRunner.executeListener({
+          event: 'entry.update',
+          info: {
+            model: contentType.split('.').at(-1),
+            entry: {
+              id: updatedEntry.id,
+              ...updatedEntry,
+            },
+          },
+        });
+      }
+    }
   }
+
   if (results?.length !== updates?.length) {
     throw new Error('Error updating rank entries.');
   } else {
@@ -121,14 +143,25 @@ module.exports = {
   },
   async index(ctx) {
     try {
-      ctx.body = await index(ctx.request.body.contentType, ctx.request.body.start, ctx.request.body.limit, ctx.request.body.locale, ctx.request.body.rankFieldName);
+      ctx.body = await index(
+        ctx.request.body.contentType,
+        ctx.request.body.start,
+        ctx.request.body.limit,
+        ctx.request.body.locale,
+        ctx.request.body.rankFieldName
+      );
     } catch (err) {
       ctx.throw(500, err);
     }
   },
   async update(ctx) {
     try {
-      ctx.body = await update(ctx.params.id, ctx.request.body.contentType, ctx.request.body.rank, ctx.request.body.rankFieldName);
+      ctx.body = await update(
+        ctx.params.id,
+        ctx.request.body.contentType,
+        ctx.request.body.rank,
+        ctx.request.body.rankFieldName
+      );
     } catch (err) {
       ctx.throw(500, err);
     }
