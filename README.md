@@ -33,8 +33,8 @@ module.exports = {
 ### In the app
 1. Go to `Settings` → `Drag Drop Content Type` → `Configuration`.
 2. Specify the `Rank Field Name` used for sorting or leave the default field name `rank`.
-3. Add a `Number` field with `Name: myRankFieldName` and `Number format: integer` to the sortable __ContentType__.
-4. Configure the view of your __ContentType__ by adding `Default sort attribute → rank` and `Default sort order → ASC` to update the view after dragging.
+3. Add a `Number` field with `Name: myRankFieldName` and `Number format: integer` to the sortable _ContentType_.
+4. Configure the view of your _ContentType_ by adding `Default sort attribute → rank` and `Default sort order → ASC` to update the view after dragging.
 5. If needed: grant permissions for the `rank` field to your roles.
 
 #### Hints
@@ -43,7 +43,7 @@ module.exports = {
 * You can enable webhooks to trigger something after updating the order.
 
 ### In your frontend
-You can make a request in the frontend to get the ordered items. In this example the __ContentType__ is called `Foo` and ordered via the `rank` field. 
+You can make a request in the frontend to get the ordered items. In this example the _ContentType_ is called `Foo` and ordered via the `rank` field. 
 
 ```
 http://localhost:1337/api/foo?sort=rank:asc
