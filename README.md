@@ -7,17 +7,19 @@
 
 ## ⏳ Installation
 
+Install with NPM.
 ```bash
-# with npm
 npm i @retikolo/drag-drop-content-types
-# with yarn
+```
+Install with Yarn.
+```bash
 yarn add @retikolo/drag-drop-content-types
 ```
 
 ## 🔧 Configuration
 
 ### In your config
-1. Add this to your `config/plugins.js` file (create it, if it doesn't exist yet):
+1. Add the following to your `config/plugins.js` file. Create the file, if it doesn't exist.
 ```js
 module.exports = {
   // ...
@@ -26,34 +28,30 @@ module.exports = {
   }
 }
 ```
-2. Run `npm run build` and (re)start the app
+2. Run `npm run build` and restart the app using `npm run develop`.
 
 ### In the app
-Go to `Settings` -> `Drag Drop Content Type` -> `Configuration`:
-* Specify how the rank field is called in your content-types. Default value is `rank`.
-* Add the `rank` fields to your content type. With the default value this would be `rank` (Number (Number format: integer)).
-* (Give permissions for the `rank` field to roles such as "Editor" if needed).
+1. Go to `Settings` → `Drag Drop Content Type` → `Configuration`:
+2. Specify the field name used for sorting. Leave it blank for the default field name `rank`.
+3. Add a `Number` field with `format: Integer` and the specified field name to the sortable ContentType (i.e. `rank` with default settings).
+4. Configure the view of your ContentType by adding `Default sort attribute → rank` and `Default sort order → ASC` to update the view after dragging.
+5. If needed: grant permissions for the `rank` field to your roles.
 
 #### Hints
-* Add "Default sort attribute" `rank`, "Default sort order" `ASC` and remove the `rank` attribute from the view using "Configure the view" button.
-* You can also set a `title` value that is displayed in the menu instead of the default.
-* If you want a second field to be displayed in the drag and drop menu, you can add s `subtitle` in the settings. The subtitle should either be:
-- A field containing a string or number or something like that.
-- It can be an object (like a relation), but it must have the `title` field specified in the settings (it won't recognize automatically!).
+* You can set a `title` value that will be displayed in the menu instead of the default field.
+* A second field can be displayed in the menu via the `subtitle` setting. It can be either a string-like field or an object such as a relation, that has a `title` field as configured in the settings.
+* You can enable webhooks to trigger something after updating the order.
 
 ### In your frontend
-Assuming you go with the default settings, you can make a request on the following url to get the ordered items:
+You can make a request in the frontend to get the ordered items. In this example the ContentType is called `Foo` and ordered via the `rank` field. 
 
 ```
 http://localhost:1337/api/foo?sort=rank:asc
 ```
-
-## 🐞 Known issues
-Due to changes in the Strapi core, the plugin causes a full page reload after sorting. This is a known issue, and will be fixed ASAP if possible.
 
 ## 🤝 Contribute
 Feel free to fork and make pull requests to this plugin. All input is welcome - thanks for all contributions so far!
 
 
 ## ⭐️ Support
-I you like this project, please give it a star. Maybe this will help it getting integrated to strapi's core some day 😊.
+I you like this project, please give it a star ⭐️. Maybe this will help it getting integrated to strapi's core some day 😊.
