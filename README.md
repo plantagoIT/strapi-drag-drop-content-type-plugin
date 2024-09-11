@@ -32,7 +32,7 @@ module.exports = {
 
 ### In the app
 1. Go to `Settings` → `Drag Drop Content Type` → `Configuration`.
-2. Specify the field name used for sorting. Leave it blank for the default field name `rank`.
+2. Specify the `Rank Field Name` used for sorting or leave the default field name `rank`.
 3. Add a `Number` field with `format: Integer` and the specified field name to the sortable ContentType (i.e. `rank` with default settings).
 4. Configure the view of your ContentType by adding `Default sort attribute → rank` and `Default sort order → ASC` to update the view after dragging.
 5. If needed: grant permissions for the `rank` field to your roles.
