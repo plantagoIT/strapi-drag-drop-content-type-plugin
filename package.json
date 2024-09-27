@@ -1,24 +1,50 @@
 {
   "name": "@retikolo/drag-drop-content-types",
   "version": "1.7.1",
-  "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
+  "description": "This plugin adds a drag and droppable list that allows you to sort content type entries.",
   "strapi": {
     "name": "drag-drop-content-types",
-    "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
+    "description": "This plugin adds a drag and droppable list that allows you to sort content type entries.",
     "kind": "plugin",
     "displayName": "Drag Drop Content Types"
+  },
+  "type": "commonjs",
+  "exports": {
+    "./package.json": "./package.json",
+    "./strapi-admin": {
+      "source": "./admin/src/index.js",
+      "import": "./dist/admin/index.mjs",
+      "require": "./dist/admin/index.js",
+      "default": "./dist/admin/index.js"
+    },
+    "./strapi-server": {
+      "source": "./server/src/index.js",
+      "import": "./dist/server/index.mjs",
+      "require": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    }
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
   },
   "dependencies": {
+    "@strapi/design-system": "^2.0.0-rc.11",
+    "@strapi/icons": "^2.0.0-rc.11",
+    "react-intl": "^6.7.0",
     "@strapi/helper-plugin": "^4.25.0",
     "array-move": "^4.0.0",
     "react-sortable-hoc": "^2.0.0",
     "zod": "^3.20.2"
   },
   "devDependencies": {
+    "@strapi/sdk-plugin": "^5.2.6",
+    "@strapi/strapi": "^5.0.1",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "styled-components": "^6.1.13",
     "eslint": "^8.54.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
@@ -27,9 +53,12 @@
     "jsdoc-tsimport-plugin": "^1.0.5"
   },
   "peerDependencies": {
-    "@strapi/design-system": "^1.13.1",
-    "@strapi/icons": "^1.13.1",
-    "@strapi/strapi": "^4.0.0"
+    "@strapi/sdk-plugin": "^5.2.6",
+    "@strapi/strapi": "^5.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "styled-components": "^6.1.13"
   },
   "author": {
     "name": "Aeneas Meier",
