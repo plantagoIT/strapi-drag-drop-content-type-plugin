@@ -9,6 +9,12 @@
     "displayName": "Drag Drop Content Types"
   },
   "type": "commonjs",
+  "scripts": {
+    "build": "strapi-plugin build",
+    "verify": "strapi-plugin verify",
+    "watch": "strapi-plugin watch",
+    "watch:link": "strapi-plugin watch:link"
+  },
   "exports": {
     "./package.json": "./package.json",
     "./strapi-admin": {
@@ -32,9 +38,8 @@
     "@strapi/design-system": "^2.0.0-rc.11",
     "@strapi/icons": "^2.0.0-rc.11",
     "react-intl": "^6.7.0",
-    "@strapi/helper-plugin": "^4.25.0",
     "array-move": "^4.0.0",
-    "react-sortable-hoc": "^2.0.0",
+    "react-sortable-hoc-react-18": "git://github.com/arenddeboer/react-sortable-hoc-react-18.git",
     "zod": "^3.20.2"
   },
   "devDependencies": {
