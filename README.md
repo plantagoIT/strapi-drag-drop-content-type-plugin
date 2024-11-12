@@ -5,28 +5,31 @@
 
 ![dragdropcrop](https://user-images.githubusercontent.com/37687705/212884821-356ec68c-b71a-4b89-9e99-8a625f84cfbe.gif)
 
+Inspired by the [Drag-Drop-Content-Type Strapi 4 plugin](https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin).
+Drag-drop feature completely rewritten to use dndkit because react-sortable-hoc is deprecated and not compatible with React 18.
+
 ## ⏳ Installation
 
 Install with NPM.
 ```bash
-npm i @retikolo/drag-drop-content-types
+npm i @cslegany/drag-drop-content-types-strapi5
 ```
 Install with Yarn.
 ```bash
-yarn add @retikolo/drag-drop-content-types
+yarn add @cslegany/drag-drop-content-types-strapi5
 ```
 
 ## 🔧 Configuration
 
 ### In your config
-1. Add the following to your `config/plugins.js` file. Create the file, if it doesn't exist.
+1. Add the following to your `config/plugins.ts` file. Create the file, if it doesn't exist.
 ```js
-module.exports = {
+export default () => ({
   // ...
   'drag-drop-content-types': {
     enabled: true
   }
-}
+})
 ```
 2. Run `npm run build` and restart the app using `npm run develop`.
 

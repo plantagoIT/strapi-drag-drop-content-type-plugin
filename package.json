@@ -1,82 +1,13 @@
 {
-  "name": "@retikolo/drag-drop-content-types",
-  "version": "1.7.1",
-  "description": "This plugin adds a drag and droppable list that allows you to sort content type entries.",
+  "name": "@cslegany/drag-drop-content-types-strapi5",
+  "version": "0.5.1",
+  "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
   "strapi": {
-    "name": "drag-drop-content-types",
-    "description": "This plugin adds a drag and droppable list that allows you to sort content type entries.",
     "kind": "plugin",
-    "displayName": "Drag Drop Content Types"
+    "name": "drag-drop-content-types",
+    "displayName": "Drag Drop Content Types",
+    "description": "This plugin add a drag and droppable list that allows you to sort content type entries."
   },
-  "type": "commonjs",
-  "scripts": {
-    "build": "strapi-plugin build",
-    "verify": "strapi-plugin verify",
-    "watch": "strapi-plugin watch",
-    "watch:link": "strapi-plugin watch:link"
-  },
-  "exports": {
-    "./package.json": "./package.json",
-    "./strapi-admin": {
-      "source": "./admin/src/index.js",
-      "import": "./dist/admin/index.mjs",
-      "require": "./dist/admin/index.js",
-      "default": "./dist/admin/index.js"
-    },
-    "./strapi-server": {
-      "source": "./server/src/index.js",
-      "import": "./dist/server/index.mjs",
-      "require": "./dist/server/index.js",
-      "default": "./dist/server/index.js"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin"
-  },
-  "dependencies": {
-    "@strapi/design-system": "^2.0.0-rc.11",
-    "@strapi/icons": "^2.0.0-rc.11",
-    "react-intl": "^6.7.0",
-    "array-move": "^4.0.0",
-    "react-sortable-hoc-react-18": "git://github.com/arenddeboer/react-sortable-hoc-react-18.git",
-    "zod": "^3.20.2"
-  },
-  "devDependencies": {
-    "@strapi/sdk-plugin": "^5.2.6",
-    "@strapi/strapi": "^5.0.1",
-    "prettier": "^3.3.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
-    "styled-components": "^6.1.13",
-    "eslint": "^8.54.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "jsdoc-tsimport-plugin": "^1.0.5"
-  },
-  "peerDependencies": {
-    "@strapi/sdk-plugin": "^5.2.6",
-    "@strapi/strapi": "^5.0.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
-    "styled-components": "^6.1.13"
-  },
-  "author": {
-    "name": "Aeneas Meier",
-    "email": "aeneas@retikolo.xyz",
-    "url": "https://rgb.retikolo.xyz"
-  },
-  "maintainers": [
-    {
-      "name": "Aeneas Meier",
-      "email": "aeneas@retikolo.xyz",
-      "url": "https://rgb.retikolo.xyz"
-    }
-  ],
   "keywords": [
     "strapi",
     "plugin",
@@ -89,9 +20,77 @@
     "sort",
     "order"
   ],
-  "engines": {
-    "node": ">=14.19.1",
-    "npm": ">=6.0.0"
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    "./package.json": "./package.json",
+    "./strapi-admin": {
+      "types": "./dist/admin/src/index.d.ts",
+      "source": "./admin/src/index.ts",
+      "import": "./dist/admin/index.mjs",
+      "require": "./dist/admin/index.js",
+      "default": "./dist/admin/index.js"
+    },
+    "./strapi-server": {
+      "types": "./dist/server/src/index.d.ts",
+      "source": "./server/src/index.ts",
+      "import": "./dist/server/index.mjs",
+      "require": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    }
   },
-  "license": "MIT"
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "strapi-plugin build",
+    "test:ts:back": "run -T tsc -p server/tsconfig.json",
+    "test:ts:front": "run -T tsc -p admin/tsconfig.json",
+    "verify": "strapi-plugin verify",
+    "watch": "strapi-plugin watch",
+    "watch:link": "strapi-plugin watch:link"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@strapi/design-system": "^2.0.0-rc.11",
+    "@strapi/icons": "^2.0.0-rc.11",
+    "array-move": "^4.0.0",
+    "react-intl": "^6.6.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@strapi/sdk-plugin": "^5.2.6",
+    "@strapi/strapi": "^5.0.0",
+    "@strapi/typescript-utils": "^5.0.0",
+    "@types/react": "^18.3.8",
+    "@types/react-dom": "^18.3.0",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "styled-components": "^6.1.13",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "@strapi/sdk-plugin": "^5.2.6",
+    "@strapi/strapi": "^5.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "styled-components": "^6.1.13"
+  },
+  "author": {
+    "name": "cslegany <cslegany@synerinsoft.com>",
+    "email": "cslegany@synerinsoft.com",
+    "url": "https://synerinsoft.com/"
+  },
+  "maintainers": [
+    {
+      "name": "https://synerinsoft.com/",
+      "email": "cslegany@synerinsoft.com",
+      "url": "https://synerinsoft.com/"
+    }
+  ]
 }
