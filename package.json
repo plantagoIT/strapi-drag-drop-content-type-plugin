@@ -1,5 +1,5 @@
 {
-  "name": "@retikolo/drag-drop-content-types-strapi5",
+  "name": "@retikolo/drag-drop-content-types-strapi",
   "version": "1.0.0",
   "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
   "strapi": {
@@ -84,15 +84,15 @@
     "styled-components": "^6.1.13"
   },
   "author": {
-    "name": "cslegany <cslegany@synerinsoft.com>",
-    "email": "cslegany@synerinsoft.com",
-    "url": "https://synerinsoft.com/"
+    "name": "Aeneas Meier",
+    "email": "aeneas@retikolo.xyz",
+    "url": "https://rgb.retikolo.xyz"
   },
   "maintainers": [
     {
-      "name": "https://synerinsoft.com/",
-      "email": "cslegany@synerinsoft.com",
-      "url": "https://synerinsoft.com/"
+      "name": "Aeneas Meier",
+      "email": "aeneas@retikolo.xyz",
+      "url": "https://rgb.retikolo.xyz"
     }
-  ]
+  ],
 }
