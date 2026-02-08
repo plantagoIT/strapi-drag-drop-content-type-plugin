@@ -22,8 +22,8 @@ This version (1.0.0) has been updated for **Strapi 5** compatibility with the fo
 - After sorting items, the content manager list view refreshes when you close the sort modal to display the updated order
 - Uses Strapi 5's new Popover component with controlled state for better stability
 
-### Stapi 4 Compatibility
-If you are still using Strapi 4, you can use version 0.5.1 of this plugin.
+### Strapi 4 Compatibility
+If you are still using Strapi 4, you can use version 0.5.1 of this plugin, which is available on the `strapi4` branch.
 
 ## ⏳ Installation
 
