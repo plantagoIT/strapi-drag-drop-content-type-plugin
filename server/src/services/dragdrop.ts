@@ -53,14 +53,15 @@ const dragdrop = ({ strapi }: { strapi: Core.Strapi }) => ({
         // Trigger webhook listener for updated entry
         //see: https://forum.strapi.io/t/trigger-webhook-event-from-api/35919/5
         if (shouldTriggerWebhooks) {
+          const parts = contentType.split('.');
           const info: Record<string, unknown> = {
-            model: contentType.split('.').at(-1),
-              entry: {
-                id: updatedEntry.id,
-                ...updatedEntry,
-              },
+            model: parts[parts.length - 1],
+            entry: {
+              id: updatedEntry.id,
+              ...updatedEntry,
+            },
           }
-                    
+
           await strapi.get("webhookRunner").executeListener({
             event: 'entry.update',
             info,
