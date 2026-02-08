@@ -1,6 +1,6 @@
 {
   "name": "@cslegany/drag-drop-content-types-strapi5",
-  "version": "0.5.1",
+  "version": "1.0.0",
   "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
   "strapi": {
     "kind": "plugin",
@@ -10,15 +10,17 @@
   },
   "keywords": [
     "strapi",
-    "plugin",
+    "strapi5",
+    "strapi-5",
     "strapi-plugin",
     "drag",
     "drop",
     "drag and drop",
-    "drag drop content types",
+    "dnd-kit",
     "content types",
     "sort",
-    "order"
+    "order",
+    "reorder"
   ],
   "license": "MIT",
   "type": "commonjs",

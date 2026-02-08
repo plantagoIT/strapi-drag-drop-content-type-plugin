@@ -8,6 +8,23 @@
 Inspired by the [Drag-Drop-Content-Type Strapi 4 plugin](https://github.com/plantagoIT/strapi-drag-drop-content-type-plugin).
 Drag-drop feature completely rewritten to use dndkit because react-sortable-hoc is deprecated and not compatible with React 18.
 
+## 🔄 Strapi 5 Compatibility
+
+This version (1.0.0) has been updated for **Strapi 5** compatibility with the following changes:
+
+### Key Updates
+- **Removed Redux dependency**: Strapi 5 changed its internal architecture, so the Redux-based list view refresh has been replaced with a page reload mechanism that triggers when closing the sort modal after making changes
+- **Updated @dnd-kit**: Migrated from react-sortable-hoc to @dnd-kit for drag-and-drop functionality (React 18 compatible)
+- **Strapi 5 Admin API**: Updated to use new Strapi 5 admin hooks (`useFetchClient`, `useNotification`, `useAPIErrorHandler`)
+- **Improved UX**: You can now drag and reorder multiple items in one session - the page only refreshes once when you close the modal, preserving your changes
+
+### Known Considerations
+- After sorting items, the content manager list view refreshes when you close the sort modal to display the updated order
+- Uses Strapi 5's new Popover component with controlled state for better stability
+
+### Stapi 4 Compatibility
+If you are still using Strapi 4, you can use version 0.5.1 of this plugin.
+
 ## ⏳ Installation
 
 Install with NPM.
