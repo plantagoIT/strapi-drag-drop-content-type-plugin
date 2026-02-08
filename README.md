@@ -10,7 +10,7 @@ Drag-drop feature completely rewritten to use dndkit because react-sortable-hoc 
 
 ## 🔄 Strapi 5 Compatibility
 
-This version (1.0.0) has been updated for **Strapi 5** compatibility with the following changes:
+This version (2.0.0) has been updated for **Strapi 5** compatibility with the following changes:
 
 ### Key Updates
 - **Removed Redux dependency**: Strapi 5 changed its internal architecture, so the Redux-based list view refresh has been replaced with a page reload mechanism that triggers when closing the sort modal after making changes
@@ -23,7 +23,7 @@ This version (1.0.0) has been updated for **Strapi 5** compatibility with the fo
 - Uses Strapi 5's new Popover component with controlled state for better stability
 
 ### Strapi 4 Compatibility
-If you are still using Strapi 4, you can use version 0.5.1 of this plugin, which is available on the `strapi4` branch.
+If you are still using Strapi 4, you can use version 1.7.1 of this plugin, which is available on the `strapi4` branch.
 
 ## ⏳ Installation
 

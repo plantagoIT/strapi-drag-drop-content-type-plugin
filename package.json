@@ -1,6 +1,6 @@
 {
   "name": "@retikolo/drag-drop-content-types-strapi",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "This plugin add a drag and droppable list that allows you to sort content type entries.",
   "strapi": {
     "kind": "plugin",
@@ -94,5 +94,5 @@
       "email": "aeneas@retikolo.xyz",
       "url": "https://rgb.retikolo.xyz"
     }
-  ],
+  ]
 }
