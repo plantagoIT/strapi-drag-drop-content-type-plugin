@@ -1,11 +1,7 @@
 import { arrayMoveImmutable } from 'array-move';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useFetchClient, useNotification, useAPIErrorHandler } from '@strapi/strapi/admin';
-
-import { getData, getDataSucceeded } from '../../utils/strapi';
 import { useQueryParams } from '../../utils/useQueryParams';
-import pluginPermissions from '../../permissions';
 import { ContentTypeConfigResponse, ContentTypeResponse, FetchedSettings, GetPageEntriesResponse, Pagination, QueryParams, UpdateContentTypeParams } from './types';
 import { PluginSettingsResponse } from '../../../../typings';
 import SortMenu from './SortMenu';
@@ -27,9 +23,9 @@ const SortModal = () => {
         mainField: null,
     });
     const [noEntriesFromNextPage, setNoEntriesFromNextPage] = useState(0);
+    const [hasSorted, setHasSorted] = useState(false);
 
     const { queryParams } = useQueryParams();
-    const dispatch = useDispatch();
 
     const { toggleNotification } = useNotification();
     const { formatAPIError } = useAPIErrorHandler();
@@ -49,20 +45,6 @@ const SortModal = () => {
     const hasMore = noEntriesFromNextPage
         ? noEntriesFromNextPage + listIncrementSize >= data?.length - 1
         : false;
-
-    // Show loading symbol after refetching the entries
-    const refetchEntries = React.useCallback(
-        () => dispatch(getData(uid, undefined)),
-        [dispatch]
-    );
-
-    // Use strapi hook to reorder list after drag and drop
-    const refetchEntriesSucceeded = React.useCallback(
-        (pagination: Pagination, newData: GetPageEntriesResponse[]) => {
-            dispatch(getDataSucceeded(pagination, newData));
-        },
-        [dispatch, pagination, data]
-    );
 
     // Fetch content type config settings
     const fetchContentTypeConfig = async () => {
@@ -214,10 +196,15 @@ const SortModal = () => {
 
     // Actions to perform after sorting is successful
     const afterUpdate = (newData: GetPageEntriesResponse[], pagination?: Pagination) => {
-        // Avoid full page reload and only re-render table.
-        refetchEntries();
-        if(pagination)
-            refetchEntriesSucceeded(pagination, newData);
+        // Mark that sorting has occurred - page will reload when modal closes
+        setHasSorted(true);
+    };
+
+    // Handle modal close - reload page if sorting occurred
+    const handleModalClose = () => {
+        if (hasSorted) {
+            window.location.reload();
+        }
     };
 
     const showMoreHandler = () => {
@@ -227,7 +214,6 @@ const SortModal = () => {
     // Fetch content-type on page render
     useEffect(() => {
         fetchContentTypeConfig();
-        console.log('fetchContentTypeConfig');
     }, []);
 
     // Fetch settings when mainField changes
@@ -262,15 +248,16 @@ const SortModal = () => {
 
     return (
         // <CheckPermissions permissions={pluginPermissions.main}>
-            <SortMenu
-                data={data}
-                status={status}
-                onOpen={fetchContentType}
-                onSortEnd={updateContentType}
-                onShowMore={showMoreHandler}
-                hasMore={hasMore}
-                settings={settings}
-            />
+        <SortMenu
+            data={data}
+            status={status}
+            onOpen={fetchContentType}
+            onSortEnd={updateContentType}
+            onShowMore={showMoreHandler}
+            onClose={handleModalClose}
+            hasMore={hasMore}
+            settings={settings}
+        />
         // </CheckPermissions>
     );
 

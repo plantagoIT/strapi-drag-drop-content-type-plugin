@@ -5,7 +5,7 @@ import { Drag } from '@strapi/icons';
 import { Popover } from '@strapi/design-system';
 import SortableList from './SortableList';
 
-const SortMenu = ({ status, data, onSortEnd, onShowMore, hasMore, settings }: SortMenuProps) => {
+const SortMenu = ({ status, data, onSortEnd, onShowMore, hasMore, settings, onClose }: SortMenuProps) => {
     const [visible, setVisible] = useState(false);
     const buttonRef = React.useRef(null);
     const togglePortal = React.useCallback(() => {
@@ -15,8 +15,12 @@ const SortMenu = ({ status, data, onSortEnd, onShowMore, hasMore, settings }: So
     const handleClose = React.useCallback((event: any) => {
         if (event?.target?.id !== 'drag-drop-content-type-plugin--sort-menu-button') {
             setVisible(false);
+            // Call onClose callback when popover closes
+            if (onClose) {
+                onClose();
+            }
         }
-    }, []);
+    }, [onClose]);
 
     return (
         <React.Fragment>
